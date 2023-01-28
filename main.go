@@ -26,15 +26,32 @@ func action(c *cli.Context) error {
 	}
 
 	config := plugin.Config{
-		Debug:         c.Bool("config.debug"),
-		TimeoutSecond: c.Int("config.timeout_second"),
-		Webhook:       c.String("config.webhook"),
-		Secret:        c.String("config.secret"),
-		MsgType:       c.String("config.msg_type"),
+		Webhook: c.String("config.webhook"),
+		Secret:  c.String("config.secret"),
+		MsgType: c.String("config.msg_type"),
+
+		FileBrowserTimeoutPushMin:              c.Uint("config.file_browser_timeout_push_min"),
+		FileBrowserUsername:                    c.String("config.file_browser_username"),
+		FileBrowserUserPassword:                c.String("config.file_browser_user_password"),
+		FileBrowserDistRoot:                    c.String("config.file_browser_dist_root"),
+		FileBrowserDistType:                    c.String("config.file_browser_dist_type"),
+		FileBrowserDistGraph:                   c.String("config.file_browser_dist_graph"),
+		FileBrowserTargetFileRegular:           c.String("config.file_browser_target_file_regular"),
+		FileBrowserShareLinkEnable:             c.Bool("config.file_browser_share_link_enable"),
+		FileBrowserShareLinkUnit:               c.String("config.file_browser_share_link_unit"),
+		FileBrowserShareLinkExpires:            c.Uint("config.file_browser_share_link_expires"),
+		FileBrowserShareLinkAutoPasswordEnable: c.Bool("config.file_browser_share_link_auto_password_enable"),
+		FileBrowserShareLinkPassword:           c.String("config.file_browser_share_link_password"),
+		Debug:                                  c.Bool("config.debug"),
+
+		TimeoutSecond:                c.Uint("config.timeout_second"),
+		DownloadEnable:               c.Bool("config.download_enable"),
+		FileBrowserDownloadPath:      c.String("config.file_browser_download_path"),
+		FileBrowserDownloadLocalPath: c.String("config.file_browser_download_local_path"),
 	}
 
 	p := plugin.Plugin{
-		Drone:  *drone,
+		Drone:  drone,
 		Config: config,
 	}
 	err := p.Exec()
@@ -47,61 +64,14 @@ func action(c *cli.Context) error {
 	return nil
 }
 
-func main() {
-	app := cli.NewApp()
-	app.Version = Version
-	app.Name = "Drone Plugin"
-	app.Usage = ""
-	year := time.Now().Year()
-	app.Copyright = fmt.Sprintf("© 2022-%d sinlov", year)
-	author := &cli.Author{
-		Name:  "sinlov",
-		Email: "sinlovgmppt@gmail.com",
-	}
-	app.Authors = []*cli.Author{
-		author,
-	}
-
-	app.Action = action
-	app.Flags = []cli.Flag{
-		// plugin hidden start
-		&cli.BoolFlag{
-			Name:    "config.download_enable,download_enable",
-			Usage:   "file_browser download mode, if use this mode only download. default: false",
-			Value:   false,
-			Hidden:  true,
-			EnvVars: []string{"PLUGIN_DOWNLOAD_ENABLE"},
-		},
-		&cli.StringFlag{
-			Name:    "config.file_browser_download_path,file_browser_download_path",
-			Usage:   "file_browser download mode use remote path",
-			Hidden:  true,
-			EnvVars: []string{"PLUGIN_FILE_BROWSER_DOWNLOAD_PATH"},
-		},
-		&cli.StringFlag{
-			Name:    "config.file_browser_download_local_path,file_browser_download_local_path",
-			Usage:   "file_browser download mode local path",
-			Hidden:  true,
-			EnvVars: []string{"PLUGIN_FILE_BROWSER_DOWNLOAD_LOCAL_PATH"},
-		},
-		// plugin hidden end
-
+// pluginFlag
+// set plugin flag at here
+func pluginFlag() []cli.Flag {
+	return []cli.Flag{
 		// plugin start
-		&cli.BoolFlag{
-			Name:    "config.debug,debug",
-			Usage:   "debug mode",
-			Value:   false,
-			EnvVars: []string{"PLUGIN_DEBUG"},
-		},
-		&cli.UintFlag{
-			Name:    "config.timeout_second,timeout_second",
-			Usage:   "do request timeout setting second. default: 10",
-			Value:   10,
-			EnvVars: []string{"PLUGIN_TIMEOUT_SECOND"},
-		},
 		&cli.UintFlag{
 			Name:    "config.file_browser_timeout_push_min,file_browser_timeout_push_minute",
-			Usage:   "file_browser push each file timeout push minute default: 1",
+			Usage:   "file_browser push each file timeout push minute",
 			Value:   1,
 			EnvVars: []string{"PLUGIN_FILE_BROWSER_TIMEOUT_PUSH_MINUTE"},
 		},
@@ -118,6 +88,7 @@ func main() {
 		&cli.StringFlag{
 			Name:    "config.file_browser_dist_root,file_browser_dist_root",
 			Usage:   "must set args, path of file_browser root like: dist/",
+			Value:   "dist/",
 			EnvVars: []string{"PLUGIN_FILE_BROWSER_DIST_ROOT"},
 		},
 		&cli.StringFlag{
@@ -128,7 +99,8 @@ func main() {
 		},
 		&cli.StringFlag{
 			Name:    "config.file_browser_dist_graph,file_browser_dist_graph",
-			Usage:   "type of dist custom set as: {{ Commit.Branch }}/{{ Commit.Sha }}/{{ Build.FinishedAt }}/{{ Build.Tag }}",
+			Usage:   "type of dist custom set as struct [ drone_info.Drone ]",
+			Value:   "{{ Commit.Branch }}/{{ Commit.Sha }}/{{ Build.FinishedAt }}/{{ Build.Tag }}",
 			EnvVars: []string{"PLUGIN_FILE_BROWSER_DIST_GRAPH"},
 		},
 		&cli.StringFlag{
@@ -138,7 +110,7 @@ func main() {
 		},
 		&cli.BoolFlag{
 			Name:    "config.file_browser_share_link_enable,file_browser_share_link_enable",
-			Usage:   "share dist dir as link, default: true",
+			Usage:   "share dist dir as link",
 			Value:   true,
 			EnvVars: []string{"PLUGIN_FILE_BROWSER_SHARE_LINK_ENABLE"},
 		},
@@ -156,7 +128,7 @@ func main() {
 		},
 		&cli.BoolFlag{
 			Name:    "config.file_browser_share_link_auto_password_enable,file_browser_share_link_auto_password_enable",
-			Usage:   "password of share_link auto , if open this will cover settings.file_browser_share_link_password default: false",
+			Usage:   "password of share_link auto , if open this will cover settings.file_browser_share_link_password",
 			Value:   false,
 			EnvVars: []string{"PLUGIN_FILE_BROWSER_SHARE_LINK_AUTO_PASSWORD_ENABLE"},
 		},
@@ -166,12 +138,60 @@ func main() {
 			Value:   "",
 			EnvVars: []string{"PLUGIN_FILE_BROWSER_SHARE_LINK_PASSWORD"},
 		},
+		&cli.BoolFlag{
+			Name:    "config.debug,debug",
+			Usage:   "debug mode",
+			Value:   false,
+			EnvVars: []string{"PLUGIN_DEBUG"},
+		},
 		//&cli.StringFlag{
 		//	Name:    "config.new_arg,new_arg",
 		//	Usage:   "",
 		//	EnvVars: []string{"PLUGIN_new_arg"},
 		//},
 		// plugin end
+	}
+}
+
+// pluginHideFlag
+// set plugin hide flag at here
+func pluginHideFlag() []cli.Flag {
+	return []cli.Flag{
+		&cli.UintFlag{
+			Name:    "config.timeout_second,timeout_second",
+			Usage:   "do request timeout setting second.",
+			Hidden:  true,
+			Value:   10,
+			EnvVars: []string{"PLUGIN_TIMEOUT_SECOND"},
+		},
+		// plugin hidden start
+		&cli.BoolFlag{
+			Name:    "config.download_enable,download_enable",
+			Usage:   "file_browser download mode, if use this mode only can check or download. default: false",
+			Value:   false,
+			Hidden:  true,
+			EnvVars: []string{"PLUGIN_DOWNLOAD_ENABLE"},
+		},
+		&cli.StringFlag{
+			Name:    "config.file_browser_download_path,file_browser_download_path",
+			Usage:   "file_browser download mode use remote path",
+			Hidden:  true,
+			EnvVars: []string{"PLUGIN_FILE_BROWSER_DOWNLOAD_PATH"},
+		},
+		&cli.StringFlag{
+			Name:    "config.file_browser_download_local_path,file_browser_download_local_path",
+			Usage:   "file_browser download mode local path",
+			Hidden:  true,
+			EnvVars: []string{"PLUGIN_FILE_BROWSER_DOWNLOAD_LOCAL_PATH"},
+		},
+		// plugin hidden end
+	}
+}
+
+// droneInfoFlag
+// Please do not edit unless you understand drone's environment variables.
+func droneInfoFlag() []cli.Flag {
+	return []cli.Flag{
 		// droneInfo start
 		&cli.StringFlag{
 			Name:    "commit.author.username",
@@ -302,22 +322,11 @@ func main() {
 		},
 		// droneInfo end
 	}
-
-	// kubernetes runner patch
-	if _, err := os.Stat("/run/drone/env"); err == nil {
-		errDotEnv := godotenv.Overload("/run/drone/env")
-		if errDotEnv != nil {
-			log.Fatalf("load /run/drone/env err: %v", errDotEnv)
-		}
-	}
-
-	// app run as urfave
-	if err := app.Run(os.Args); nil != err {
-		log.Println(err)
-	}
 }
 
-func bindDroneInfo(c *cli.Context) *drone_info.Drone {
+// bindDroneInfo
+// Please do not edit unless you understand drone's environment variables.
+func bindDroneInfo(c *cli.Context) drone_info.Drone {
 	var drone = drone_info.Drone{
 		//  repo info
 		Repo: drone_info.Repo{
@@ -356,5 +365,49 @@ func bindDroneInfo(c *cli.Context) *drone_info.Drone {
 			FinishedAt: c.Uint64("stage.finished"),
 		},
 	}
-	return &drone
+	return drone
+}
+
+func main() {
+	app := cli.NewApp()
+	app.Version = Version
+	app.Name = "Drone Plugin"
+	app.Usage = ""
+	year := time.Now().Year()
+	app.Copyright = fmt.Sprintf("© 2022-%d sinlov", year)
+	author := &cli.Author{
+		Name:  "sinlov",
+		Email: "sinlovgmppt@gmail.com",
+	}
+	app.Authors = []*cli.Author{
+		author,
+	}
+
+	app.Action = action
+	flags := appendCliFlag(droneInfoFlag(), pluginFlag())
+	flags = appendCliFlag(flags, pluginHideFlag())
+	app.Flags = flags
+
+	// kubernetes runner patch
+	if _, err := os.Stat("/run/drone/env"); err == nil {
+		errDotEnv := godotenv.Overload("/run/drone/env")
+		if errDotEnv != nil {
+			log.Fatalf("load /run/drone/env err: %v", errDotEnv)
+		}
+	}
+
+	// app run as urfave
+	if err := app.Run(os.Args); nil != err {
+		log.Println(err)
+	}
+}
+
+// appendCliFlag
+// append cli.Flag
+func appendCliFlag(target []cli.Flag, elem []cli.Flag) []cli.Flag {
+	if len(elem) == 0 {
+		return target
+	}
+
+	return append(target, elem...)
 }
