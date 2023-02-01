@@ -98,9 +98,9 @@ func workOnSend(p *Plugin) error {
 		return fmt.Errorf("plugin file_browser_remote_root_path not be empty")
 	}
 
-	if sendModeConfig.FileBrowserTargetDistRootPath == "" {
-		return fmt.Errorf("plugin file_browser_target_dist_root_path not be empty")
-	}
+	//if sendModeConfig.FileBrowserTargetDistRootPath == "" {
+	//	return fmt.Errorf("plugin file_browser_target_dist_root_path not be empty")
+	//}
 
 	var remoteRealRootPath = strings.TrimRight(sendModeConfig.FileBrowserRemoteRootPath, "/")
 

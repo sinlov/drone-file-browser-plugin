@@ -58,12 +58,12 @@ func TestPluginSendMode(t *testing.T) {
 
 	p.Config.FileBrowserSendModeConfig.FileBrowserRemoteRootPath = mockFileBrowserRemoteRootPath
 
-	err = p.Exec()
-	if nil == err {
-		t.Error("args file_browser_target_dist_root_path should be catch!")
-	}
+	//err = p.Exec()
+	//if nil == err {
+	//	t.Error("args file_browser_target_dist_root_path should be catch!")
+	//}
 
-	p.Config.FileBrowserSendModeConfig.FileBrowserTargetDistRootPath = mockFileBrowserTargetDistRootPath
+	//p.Config.FileBrowserSendModeConfig.FileBrowserTargetDistRootPath = mockFileBrowserTargetDistRootPath
 	p.Config.FileBrowserSendModeConfig.FileBrowserTargetFileRegular = mockFileBrowserTargetFileRegularFail
 
 	p.Config.TimeoutSecond = defTimeoutSecond
