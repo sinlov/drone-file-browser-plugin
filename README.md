@@ -18,7 +18,7 @@
 steps:
   - name: drone-file-browser-send
     image: sinlov/drone-file-browser-plugin:latest
-    pull: if-not-exists
+#    pull: if-not-exists
     settings:
       file_browser_host: # must set args, file_browser host like http://127.0.0.1
         from_secret: file_browser_host
@@ -43,7 +43,7 @@ steps:
 steps:
   - name: drone-file-browser-send
     image: sinlov/drone-file-browser-plugin:latest
-    pull: if-not-exists
+#    pull: if-not-exists
     settings:
       debug: false # plugin debug switch
       timeout_second: 10 # api timeout default: 10
