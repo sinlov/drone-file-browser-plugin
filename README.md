@@ -20,8 +20,7 @@ steps:
     image: sinlov/drone-file-browser-plugin:latest
 #    pull: if-not-exists
     settings:
-      file_browser_host: # must set args, file_browser host like http://127.0.0.1
-        from_secret: file_browser_host
+      file_browser_host: "http://127.0.0.1" # must set args, file_browser host like http://127.0.0.1
       file_browser_username: # must set args, file_browser username
         # https://docs.drone.io/pipeline/environment/syntax/#from-secrets
         from_secret: file_browser_user_name

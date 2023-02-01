@@ -21,6 +21,7 @@ import (
 type (
 	// Plugin plugin all config
 	Plugin struct {
+		Version           string
 		Drone             drone_info.Drone
 		Config            Config
 		fileBrowserClient file_browser_client.FileBrowserClient
@@ -235,13 +236,13 @@ func shareBySendConfig(p Plugin, remotePath string, isDir bool) error {
 	if errSendShareFile != nil {
 		return errSendShareFile
 	}
-	if p.Config.Debug {
-		log.Printf("debug: => share remote path: %s", sharePost.RemotePath)
-		log.Printf("debug: => share page: %s", sharePost.DownloadPage)
-		if passWord != "" {
-			log.Printf("debug: => share pwd : %s", sharePost.DownloadPasswd)
-		}
+	log.Printf("drone-file-browser-plugin version %s", p.Version)
+	log.Printf("=> share page: %s", sharePost.DownloadPage)
+	if passWord != "" {
+		log.Printf("=> share pwd: %s", sharePost.DownloadPasswd)
 	}
+	log.Printf("=> share user name: %s", p.Config.FileBrowserBaseConfig.FileBrowserUsername)
+	log.Printf("=> share remote path: %s", sharePost.RemotePath)
 	setEnvFromStr(EnvPluginDroneFileBrowserSharePage, sharePost.DownloadPage)
 	setEnvFromStr(EnvPluginDroneFileBrowserSharePasswd, sharePost.DownloadPasswd)
 	//setEnvFromStr(EnvPluginDroneFileBrowserShareDownloadUrl, sharePost.DownloadUrl)
