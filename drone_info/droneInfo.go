@@ -1,6 +1,8 @@
 package drone_info
 
 const (
+	DroneTimeFormatDefault = "2006-01-02-03-04-05"
+
 	// EnvDroneCommitAuthorName
 	// Provides the commit author name for the current running build. Note this is a user-defined value and may be empty or inaccurate.
 	// @doc https://docs.drone.io/pipeline/environment/reference/drone-commit-author-name/
@@ -231,7 +233,13 @@ type (
 		// FinishedAt
 		// by env:DRONE_STAGE_FINISHED
 		// @doc https://docs.drone.io/pipeline/environment/reference/drone-stage-finished/
-		FinishedAt uint64
+		// FinishedTime
+		// form StartedAt
+		StartedTime string
+		FinishedAt  uint64
+		// FinishedTime
+		// form FinishedAt
+		FinishedTime string
 		// Machine
 		// by env:DRONE_STAGE_MACHINE
 		// Provides the name of the host machine on which the pipeline is currently running.

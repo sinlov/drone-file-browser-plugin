@@ -3,6 +3,7 @@ package plugin
 import (
 	"fmt"
 	"github.com/sinlov/drone-file-browser-plugin/drone_info"
+	"github.com/sinlov/drone-file-browser-plugin/template"
 	"github.com/sinlov/drone-file-browser-plugin/tools"
 	"github.com/sinlov/filebrowser-client/file_browser_client"
 	"github.com/sinlov/filebrowser-client/tools/folder"
@@ -105,7 +106,8 @@ func workOnSend(p *Plugin) error {
 	case DistTypeGit:
 		if p.Drone.Build.Tag == "" {
 			remoteRealRootPath = fmt.Sprintf("%s/%s/%s/%s/%s/%d/%s/%s",
-				remoteRealRootPath, p.Drone.Repo.HostName, p.Drone.Repo.GroupName, p.Drone.Repo.ShortName,
+				remoteRealRootPath,
+				p.Drone.Repo.HostName, p.Drone.Repo.GroupName, p.Drone.Repo.ShortName,
 				"b",
 				p.Drone.Build.Number,
 				p.Drone.Commit.Branch,
@@ -113,14 +115,23 @@ func workOnSend(p *Plugin) error {
 			)
 		} else {
 			remoteRealRootPath = fmt.Sprintf("%s/%s/%s/%s/%s/%s/%d/%s",
-				remoteRealRootPath, p.Drone.Repo.HostName, p.Drone.Repo.GroupName, p.Drone.Repo.ShortName,
+				remoteRealRootPath,
+				p.Drone.Repo.HostName, p.Drone.Repo.GroupName, p.Drone.Repo.ShortName,
 				"tag",
 				p.Drone.Build.Tag,
 				p.Drone.Build.Number,
 				string([]rune(p.Drone.Commit.Sha))[:8],
 			)
 		}
-
+	case DistTypeCustom:
+		renderPath, err := template.RenderTrim(sendModeConfig.FileBrowserDistGraph, p.Drone)
+		if err != nil {
+			return fmt.Errorf("setting file_browser_dist_graph as %s \nerr: %v", sendModeConfig.FileBrowserDistGraph, err)
+		}
+		remoteRealRootPath = fmt.Sprintf("%s/%s",
+			remoteRealRootPath,
+			renderPath,
+		)
 	}
 	targetRootPath := filepath.Join(p.Drone.Build.WorkSpace, sendModeConfig.FileBrowserTargetDistRootPath)
 	if p.Config.Debug {

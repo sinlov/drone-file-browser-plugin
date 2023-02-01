@@ -88,22 +88,37 @@ func TestPluginSendMode(t *testing.T) {
 	p.Config.FileBrowserSendModeConfig.FileBrowserShareLinkAutoPasswordEnable = true
 	p.Config.FileBrowserSendModeConfig.FileBrowserShareLinkUnit = web_api.ShareUnitHours
 	p.Config.FileBrowserSendModeConfig.FileBrowserShareLinkExpires = 4
-	// change right file regular for more than one
-	p.Config.FileBrowserSendModeConfig.FileBrowserTargetFileRegular = mockFileBrowserTargetFileRegular
+
+	p.Config.FileBrowserSendModeConfig.FileBrowserDistType = plugin.DistTypeCustom
+	p.Config.FileBrowserSendModeConfig.FileBrowserDistGraph = mockFileBrowserDistGraph
+
+	// change
+	p.Config.FileBrowserSendModeConfig.FileBrowserTargetFileRegular = mockFileBrowserTargetFileRegularOne
 
 	err = p.Exec()
 	if err != nil {
 		t.Fatal(err)
 	}
-
 	assert.NotEqual(t, "", os.Getenv(plugin.EnvPluginDroneFileBrowserShareRemotePath))
 	assert.NotEqual(t, "", os.Getenv(plugin.EnvPluginDroneFileBrowserSharePage))
 	downloadUrl := os.Getenv(plugin.EnvPluginDroneFileBrowserShareDownloadUrl)
 	assert.NotEqual(t, "", downloadUrl)
 	t.Logf("download url: %s", downloadUrl)
 
-	// change right file regular for more than one
+	p.Config.FileBrowserSendModeConfig.FileBrowserDistType = plugin.DistTypeGit
+	// change right file regular for one file
 	p.Config.FileBrowserSendModeConfig.FileBrowserTargetFileRegular = mockFileBrowserTargetFileRegularOne
+
+	err = p.Exec()
+	if err != nil {
+		t.Fatal(err)
+	}
+	downloadUrl = os.Getenv(plugin.EnvPluginDroneFileBrowserShareDownloadUrl)
+	assert.NotEqual(t, "", downloadUrl)
+	t.Logf("download url: %s", downloadUrl)
+
+	// change right file regular for more than one
+	p.Config.FileBrowserSendModeConfig.FileBrowserTargetFileRegular = mockFileBrowserTargetFileRegular
 
 	err = p.Exec()
 	if err != nil {

@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/sinlov/drone-file-browser-plugin/plugin"
+	"github.com/sinlov/filebrowser-client/web_api"
 	"log"
 	"net/url"
 	"os"
@@ -13,8 +14,10 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
-// Version of cli
-var Version = "v0.1.2"
+const (
+	// Version of cli
+	Version = "v0.1.2"
+)
 
 func action(c *cli.Context) error {
 
@@ -97,7 +100,7 @@ func pluginFlag() []cli.Flag {
 		},
 		&cli.UintFlag{
 			Name:    "config.file_browser_timeout_push_second,file_browser_timeout_push_second",
-			Usage:   "file_browser push each file timeout push second. must gather than 60",
+			Usage:   "file_browser push each file timeout push second, must gather than 60",
 			Value:   60,
 			EnvVars: []string{"PLUGIN_FILE_BROWSER_TIMEOUT_PUSH_SECOND"},
 		},
@@ -116,12 +119,12 @@ func pluginFlag() []cli.Flag {
 		&cli.StringFlag{
 			Name:    "config.file_browser_dist_graph,file_browser_dist_graph",
 			Usage:   "type of dist custom set as struct [ drone_info.Drone ]",
-			Value:   "{{ Commit.Branch }}/{{ Commit.Sha }}/{{ Build.FinishedAt }}/{{ Build.Tag }}",
+			Value:   "{{ Repo.HostName }}/{{ Repo.GroupName }}/{{ Repo.ShortName }}/s/{{ Build.Number }}/{{ Stage.Name }}-{{ Build.Number }}-{{ Stage.FinishedTime }}",
 			EnvVars: []string{"PLUGIN_FILE_BROWSER_DIST_GRAPH"},
 		},
 		&cli.StringFlag{
 			Name:    "config.file_browser_remote_root_path,file_browser_remote_root_path",
-			Usage:   "must set args, this will append file_browser_dist_type at remote",
+			Usage:   "must set args, this will append by file_browser_dist_type at remote",
 			EnvVars: []string{"PLUGIN_FILE_BROWSER_DIST_TYPE"},
 		},
 		&cli.StringFlag{
@@ -132,7 +135,7 @@ func pluginFlag() []cli.Flag {
 		},
 		&cli.StringFlag{
 			Name:    "config.file_browser_target_file_regular,file_browser_target_file_regular",
-			Usage:   "must set args, regular of send to file_browser",
+			Usage:   "must set args, regular of send to file_browser under file_browser_target_dist_root_path",
 			EnvVars: []string{"PLUGIN_FILE_BROWSER_TARGET_FILE_REGULAR"},
 		},
 		&cli.BoolFlag{
@@ -144,7 +147,7 @@ func pluginFlag() []cli.Flag {
 		&cli.StringFlag{
 			Name:    "config.file_browser_share_link_unit,file_browser_share_link_unit",
 			Usage:   "take effect by open share_link, only can use as [ days hours minutes seconds ]",
-			Value:   "days",
+			Value:   web_api.ShareUnitDays,
 			EnvVars: []string{"PLUGIN_FILE_BROWSER_SHARE_LINK_UNIT"},
 		},
 		&cli.UintFlag{
@@ -459,6 +462,10 @@ func bindDroneInfo(c *cli.Context) drone_info.Drone {
 		repoHost = parse.Host
 		repoHostName = parse.Hostname()
 	}
+	stageStartT := c.Uint64("stage.started")
+	stageStartTime := time.Unix(int64(stageStartT), 0).Format(drone_info.DroneTimeFormatDefault)
+	stageFinishedT := c.Uint64("stage.finished")
+	stageFinishedTime := time.Unix(int64(stageStartT), 0).Format(drone_info.DroneTimeFormatDefault)
 	var drone = drone_info.Drone{
 		//  repo info
 		Repo: drone_info.Repo{
@@ -503,15 +510,17 @@ func bindDroneInfo(c *cli.Context) drone_info.Drone {
 			},
 		},
 		Stage: drone_info.Stage{
-			StartedAt:  c.Uint64("stage.started"),
-			FinishedAt: c.Uint64("stage.finished"),
-			Machine:    c.String("stage.machine"),
-			Os:         c.String("stage.os"),
-			Arch:       c.String("stage.arch"),
-			Variant:    c.String("stage.variant"),
-			Type:       c.String("stage.type"),
-			Kind:       c.String("stage.kind"),
-			Name:       c.String("stage.name"),
+			StartedAt:    stageStartT,
+			StartedTime:  stageStartTime,
+			FinishedAt:   stageFinishedT,
+			FinishedTime: stageFinishedTime,
+			Machine:      c.String("stage.machine"),
+			Os:           c.String("stage.os"),
+			Arch:         c.String("stage.arch"),
+			Variant:      c.String("stage.variant"),
+			Type:         c.String("stage.type"),
+			Kind:         c.String("stage.kind"),
+			Name:         c.String("stage.name"),
 		},
 		DroneSystem: drone_info.DroneSystem{
 			Version:  c.String("drone.system.version"),

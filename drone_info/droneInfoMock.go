@@ -9,6 +9,7 @@ import (
 	"path/filepath"
 	"runtime"
 	"strconv"
+	"time"
 )
 
 const (
@@ -73,6 +74,10 @@ func MockDroneInfo(status string) *Drone {
 		repoHost = parse.Host
 		repoHostName = parse.Hostname()
 	}
+	stageStartT := mockEnvDroneStageStarted
+	stageStartTime := time.Unix(int64(stageStartT), 0).Format(DroneTimeFormatDefault)
+	stageFinishedT := mockEnvDroneStageFinished
+	stageFinishedTime := time.Unix(int64(stageStartT), 0).Format(DroneTimeFormatDefault)
 	commitSHA := mockEnvDroneCommitSha
 	branch := mockEnvDroneCommitBranch
 	droneBaseUrl := mockEnvDroneUrlBase
@@ -122,15 +127,17 @@ func MockDroneInfo(status string) *Drone {
 			},
 		},
 		Stage: Stage{
-			StartedAt:  mockEnvDroneStageStarted,
-			FinishedAt: mockEnvDroneStageFinished,
-			Machine:    mockEnvDroneStageMachine,
-			Os:         mockEnvDroneStageOs,
-			Arch:       mockEnvDroneStageArch,
-			Variant:    mockEnvDroneStageVariant,
-			Type:       mockEnvDroneStageType,
-			Kind:       mockEnvDroneStageKind,
-			Name:       mockEnvDroneStageName,
+			StartedAt:    stageStartT,
+			StartedTime:  stageStartTime,
+			FinishedAt:   stageFinishedT,
+			FinishedTime: stageFinishedTime,
+			Machine:      mockEnvDroneStageMachine,
+			Os:           mockEnvDroneStageOs,
+			Arch:         mockEnvDroneStageArch,
+			Variant:      mockEnvDroneStageVariant,
+			Type:         mockEnvDroneStageType,
+			Kind:         mockEnvDroneStageKind,
+			Name:         mockEnvDroneStageName,
 		},
 		DroneSystem: DroneSystem{
 			Version:  mockEnvDroneSystemVersion,

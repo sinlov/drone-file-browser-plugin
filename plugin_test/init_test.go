@@ -24,6 +24,7 @@ const (
 	mockFileBrowserTargetFileRegularFail = "*.json"
 	mockFileBrowserTargetFileRegular     = ".*.json"
 	mockFileBrowserTargetFileRegularOne  = ".*.apk"
+	mockFileBrowserDistGraph             = "{{ Repo.HostName }}/{{ Repo.GroupName }}/{{ Repo.ShortName }}/s/{{ Build.Number }}/{{ Stage.Name }}-{{ Build.Number }}-{{ Stage.FinishedTime }}"
 )
 
 var (

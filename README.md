@@ -6,6 +6,9 @@
 ## for what
 
 - this project used to drone CI to support [file browser](https://github.com/filebrowser/filebrowser)
+- get file browser `host` like `https://filebrowser.xxx.com`
+- this plugin need file browser `username`
+- and need file browser user need `password`
 
 ## Pipeline Settings (.drone.yml)
 
@@ -17,16 +20,19 @@ steps:
     image: sinlov/drone-file-browser-plugin:latest
     pull: if-not-exists
     settings:
-      debug: false # plugin debug switch
       file_browser_host: http://127.0.0.1 # host of file_browser # must set args, file_browser host
       file_browser_username: # must set args, file_browser username
         # https://docs.drone.io/pipeline/environment/syntax/#from-secrets
         from_secret: file_browser_user_name
       file_browser_user_password: # must set args, file_browser user password
         from_secret: file_browser_user_password
-      file_browser_dist_root: dist/ # must set args, path of file_browser root default: dist/
+      file_browser_remote_root_path: dist/ # must set args, send to file_browser base path
       file_browser_dist_type: git # must set args, type of dist file graph only can use: git, custom
-      file_browser_target_file_regular: dist/*.tar.gz # must set args, regular of send to file_browser
+      file_browser_target_dist_root_path: dist/ # must set args, path of file_browser root default: dist/
+      file_browser_target_file_regular: .*.tar.gz # must set args, regular of send to file_browser under file_browser_target_dist_root_path
+      file_browser_share_link_expires: 0 # if set 0, will allow share_link exist forever，default: 0
+      file_browser_share_link_unit: days # take effect by open share_link, only can use as [ days hours minutes seconds ]
+      file_browser_share_link_auto_password_enable: true # password of share_link auto , if open this will cover settings.file_browser_share_link_password. default: false
 ```
 
 - full
@@ -39,22 +45,24 @@ steps:
     settings:
       debug: false # plugin debug switch
       timeout_second: 10 # api timeout default: 10
-      file_browser_timeout_push_minute: 1 # file_browser push each file timeout push minute default: 1
+      file_browser_timeout_push_second: 1 # push each file timeout push second, must gather than 60.default: 60
       file_browser_host: http://127.0.0.1 # host of file_browser # must set args, file_browser host
       file_browser_username: # must set args, file_browser username
         # https://docs.drone.io/pipeline/environment/syntax/#from-secrets
         from_secret: file_browser_user_name
       file_browser_user_password: # must set args, file_browser user password
         from_secret: file_browser_user_password
-      file_browser_dist_root: dist/ # must set args, path of file_browser root default: dist/
+      file_browser_work_mode: send # 1.0 only support send 
+      file_browser_remote_root_path: dist/ # must set args, send to file_browser base path
       file_browser_dist_type: git # must set args, type of dist file graph only can use: git, custom
-      file_browser_dist_graph: "{{ Commit.Branch }}/{{ Commit.Sha }}/{{ Build.FinishedAt }}/{{ Build.Tag }}" # type of dist custom set as this
-      file_browser_target_file_regular: dist/*.tar.gz # must set args, regular of send to file_browser
+      file_browser_dist_graph: "{{ Repo.HostName }}/{{ Repo.GroupName }}/{{ Repo.ShortName }}/s/{{ Build.Number }}/{{ Stage.Name }}-{{ Build.Number }}-{{ Stage.FinishedTime }}" # type of dist custom
+      file_browser_target_dist_root_path: dist/ # must set args, path of file_browser root default: dist/
+      file_browser_target_file_regular: .*.tar.gz # must set args, regular of send to file_browser under file_browser_target_dist_root_path
       file_browser_share_link_enable: true # share dist dir as link, default: true
-      file_browser_share_link_unit: days # take effect by open share_link, only can use as [ days hours minutes seconds ]
       file_browser_share_link_expires: 0 # if set 0, will allow share_link exist forever，default: 0
+      file_browser_share_link_unit: days # take effect by open share_link, only can use as [ days hours minutes seconds ]
       file_browser_share_link_password: "" # password of share_link, if not set will not use password, default: ""
-      file_browser_share_link_auto_password_enable: false # password of share_link auto , if open this will cover settings.file_browser_share_link_password default: false
+      file_browser_share_link_auto_password_enable: false # password of share_link auto , if open this will cover settings.file_browser_share_link_password. default: false
     when:
       event: # https://docs.drone.io/pipeline/exec/syntax/conditions/#by-event
         - promote
@@ -66,6 +74,45 @@ steps:
         - failure
         # - success
 ```
+
+### settings.debug
+
+- if open `settings.debug` will try send file browser use `override` for debug.
+- please close `settings.debug` in production models
+
+### file_browser_dist_type
+
+- if use file_browser_dist_type = `git`, send to filebrowser file tree like
+
+```
+# not use tag
+${file_browser_remote_root_path}/
+	{{Repo.HostName}}/
+		{{Repo.GroupName}}/
+			{{Repo.ShortName}}/
+				b/
+					{{Build.Number}}/
+						{{Commit.Branch}}/
+							{{Commit.Sha[0:8]}}
+
+# use tag
+${file_browser_remote_root_path}/
+	{{Repo.HostName}}/
+		{{Repo.GroupName}}/
+			{{Repo.ShortName}}/
+				tag/
+					{{Build.Tag}}/
+						{{Build.Number}}/
+							{{Commit.Sha[0:8]}}
+```
+
+- you can use file_browser_dist_type = `custom`, like
+
+```
+{{ Repo.HostName }}/{{ Repo.GroupName }}/{{ Repo.ShortName }}/s/{{ Build.Number }}/{{ Stage.Name }}-{{ Build.Number }}-{{ Stage.FinishedTime }}
+```
+
+template use struct `github.com/sinlov/drone-file-browser-plugin/drone_info/Drone`
 
 # dev
 
