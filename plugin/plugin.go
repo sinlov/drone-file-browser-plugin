@@ -141,7 +141,9 @@ func workOnSend(p *Plugin) error {
 	if p.Config.Debug {
 		log.Printf("debug: workOnSend remoteRealRootPath: %s", remoteRealRootPath)
 		log.Printf("debug: workOnSend targetRootPath: %s", targetRootPath)
-		log.Printf("debug: workOnSend targetFileRegular: %s", p.Config.FileBrowserSendModeConfig.FileBrowserTargetFileRegular)
+		log.Printf("debug: workOnSend fileBrowserWorkSpace: %s", p.Config.FileBrowserBaseConfig.FileBrowserWorkSpace)
+		log.Printf("debug: workOnSend targetDistRootPath: %s", sendModeConfig.FileBrowserTargetDistRootPath)
+		log.Printf("debug: workOnSend targetFileRegular: %s", sendModeConfig.FileBrowserTargetFileRegular)
 	}
 
 	if !(folder.PathExistsFast(targetRootPath)) {
@@ -152,7 +154,7 @@ func workOnSend(p *Plugin) error {
 	if folder.PathIsFile(targetRootPath) {
 		fileSendPathList = append(fileSendPathList, targetRootPath)
 	} else {
-		matchPath, err := folder.WalkAllByMatchPath(targetRootPath, p.Config.FileBrowserSendModeConfig.FileBrowserTargetFileRegular, true)
+		matchPath, err := folder.WalkAllByMatchPath(targetRootPath, sendModeConfig.FileBrowserTargetFileRegular, true)
 		if err != nil {
 			return fmt.Errorf("file browser want send file local path %s be err: %v", targetRootPath, err)
 		}
@@ -179,7 +181,7 @@ func workOnSend(p *Plugin) error {
 		if err != nil {
 			return errSendOneFile
 		}
-		if p.Config.FileBrowserSendModeConfig.FileBrowserShareLinkEnable {
+		if sendModeConfig.FileBrowserShareLinkEnable {
 			errSendFileShare := shareBySendConfig(*p, remotePath, false)
 			if errSendFileShare != nil {
 				return errSendFileShare
@@ -197,7 +199,7 @@ func workOnSend(p *Plugin) error {
 				return errSendOneFile
 			}
 		}
-		if p.Config.FileBrowserSendModeConfig.FileBrowserShareLinkEnable {
+		if sendModeConfig.FileBrowserShareLinkEnable {
 			errSendFileShare := shareBySendConfig(*p, remoteRealRootPath, true)
 			if errSendFileShare != nil {
 				return errSendFileShare

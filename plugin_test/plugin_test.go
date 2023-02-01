@@ -75,16 +75,12 @@ func TestPluginSendMode(t *testing.T) {
 
 	err = p.Exec()
 	if err == nil {
-		t.Error("args p.Drone.Build.WorkSpace should be catch!")
+		t.Fatal("args file browser want send file local path not find any file should be catch!")
 	}
 
 	// change right workspace
 	p.Drone.Build.WorkSpace = testDataFolderAbsPath
 	p.Config.FileBrowserBaseConfig.FileBrowserWorkSpace = p.Drone.Build.WorkSpace
-
-	if err == nil {
-		t.Error("args p.Config.FileBrowserSendModeConfig.FileBrowserTargetFileRegular should be catch!")
-	}
 
 	p.Config.FileBrowserSendModeConfig.FileBrowserShareLinkEnable = true
 	p.Config.FileBrowserSendModeConfig.FileBrowserShareLinkAutoPasswordEnable = true
@@ -94,7 +90,7 @@ func TestPluginSendMode(t *testing.T) {
 	p.Config.FileBrowserSendModeConfig.FileBrowserDistType = plugin.DistTypeCustom
 	p.Config.FileBrowserSendModeConfig.FileBrowserDistGraph = mockFileBrowserDistGraph
 
-	// change
+	// change FileRegular
 	p.Config.FileBrowserSendModeConfig.FileBrowserTargetFileRegular = mockFileBrowserTargetFileRegularOne
 
 	err = p.Exec()

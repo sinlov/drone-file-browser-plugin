@@ -30,7 +30,7 @@ steps:
       file_browser_work_space: "" # file_browser work space. default "" will use env:DRONE_WORKSPACE
       file_browser_remote_root_path: dist/ # must set args, send to file_browser base path
       file_browser_dist_type: git # must set args, type of dist file graph only can use: git, custom
-      file_browser_target_dist_root_path: dist/ # path of file_browser work on root, can set "". default: ""
+      file_browser_target_dist_root_path: "" # path of file_browser work on root, can set "". default: ""
       file_browser_target_file_regular: .*.tar.gz # must set args, regular of send to file_browser under file_browser_target_dist_root_path
       file_browser_share_link_expires: 0 # if set 0, will allow share_link exist forever，default: 0
       file_browser_share_link_unit: days # take effect by open share_link, only can use as [ days hours minutes seconds ]
