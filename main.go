@@ -135,8 +135,8 @@ func pluginFlag() []cli.Flag {
 		},
 		&cli.StringFlag{
 			Name:    "config.file_browser_target_dist_root_path,file_browser_target_dist_root_path",
-			Usage:   "path of file_browser local work on root, can set \"\"./",
-			Value:   "dist/",
+			Usage:   "path of file_browser local work on root, can set \"\"",
+			Value:   "",
 			EnvVars: []string{"PLUGIN_FILE_BROWSER_TARGET_DIST_ROOT"},
 		},
 		&cli.StringFlag{
