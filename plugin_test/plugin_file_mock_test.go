@@ -20,6 +20,11 @@ func initTestDataPostFileDir() (string, error) {
 		return "", err
 	}
 
+	err = addTextFileByTry(testPostDataFolderPath, "out", "apk", 1)
+	if err != nil {
+		return "", err
+	}
+
 	innerLev1JsonCnt := 5
 	innerLev1Folder := filepath.Join(testPostDataFolderPath, "inner_1")
 	err = addTextFileByTry(innerLev1Folder, "data", "json", innerLev1JsonCnt)

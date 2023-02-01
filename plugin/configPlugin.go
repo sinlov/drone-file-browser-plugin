@@ -6,6 +6,11 @@ const (
 
 	DistTypeGit    = "git"
 	DistTypeCustom = "custom"
+
+	EnvPluginDroneFileBrowserShareRemotePath  = "PLUGIN_DRONE_FILE_BROWSER_SHARE_REMOTE_PATH"
+	EnvPluginDroneFileBrowserSharePage        = "PLUGIN_DRONE_FILE_BROWSER_SHARE_PAGE"
+	EnvPluginDroneFileBrowserSharePasswd      = "PLUGIN_DRONE_FILE_BROWSER_SHARE_PASSWD"
+	EnvPluginDroneFileBrowserShareDownloadUrl = "PLUGIN_DRONE_FILE_BROWSER_SHARE_DOWNLOAD_URL"
 )
 
 var (
@@ -31,12 +36,16 @@ type (
 	}
 
 	FileBrowserSendModeConfig struct {
-		FileBrowserDistType                    string
-		FileBrowserDistGraph                   string
-		FileBrowserRemoteRootPath              string
-		FileBrowserTargetDistRootPath          string
-		FileBrowserTargetFileRegular           string
-		FileBrowserShareLinkEnable             bool
+		FileBrowserDistType           string
+		FileBrowserDistGraph          string
+		FileBrowserRemoteRootPath     string
+		FileBrowserTargetDistRootPath string
+		FileBrowserTargetFileRegular  string
+		FileBrowserShareLinkEnable    bool
+		// FileBrowserShareLinkUnit
+		// use [ web_api.ShareUnitDays web_api.ShareUnitHours
+		// web_api.ShareUnitMinutes
+		// web_api.ShareUnitSeconds ]
 		FileBrowserShareLinkUnit               string
 		FileBrowserShareLinkExpires            uint
 		FileBrowserShareLinkAutoPasswordEnable bool

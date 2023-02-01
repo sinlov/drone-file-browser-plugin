@@ -19,9 +19,11 @@ const (
 	defTimeoutSecond     = 10
 	defTimeoutFileSecond = 30
 
-	mockFileBrowserRemoteRootPath     = "dist/"
-	mockFileBrowserTargetDistRootPath = "testdata/dist"
-	mockFileBrowserTargetFileRegular  = "*.json"
+	mockFileBrowserRemoteRootPath        = "dist/"
+	mockFileBrowserTargetDistRootPath    = "dist/"
+	mockFileBrowserTargetFileRegularFail = "*.json"
+	mockFileBrowserTargetFileRegular     = ".*.json"
+	mockFileBrowserTargetFileRegularOne  = ".*.apk"
 )
 
 var (

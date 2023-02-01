@@ -1,10 +1,13 @@
 package drone_info
 
 import (
+	"errors"
 	"fmt"
 	"log"
 	"net/url"
 	"os"
+	"path/filepath"
+	"runtime"
 	"strconv"
 )
 
@@ -14,8 +17,14 @@ const (
 	mockEnvDroneRepoOwner         = "sinlov"
 	mockEnvDroneCommitBranch      = "main"
 	mockEnvDroneRemoteUrlBase     = "https://github.com"
-	mockEnvDroneUrlBase           = "https://drone.xxx.com"
-	mockEnvDroneRepoScm           = "git"
+
+	mockEnvDroneSystemVersion  = "1.0.0"
+	mockEnvDroneSystemHost     = "drone.xxx.com"
+	mockEnvDroneSystemHostName = "drone.xxx.com"
+	mockEnvDroneSystemProto    = "https"
+
+	mockEnvDroneUrlBase = "https://drone.xxx.com"
+	mockEnvDroneRepoScm = "git"
 
 	mockEnvDroneStageStarted  uint64 = 1674531206
 	mockEnvDroneStageFinished uint64 = 1674532106
@@ -30,6 +39,8 @@ const (
 	mockEnvDroneStageKind     string = "pipeline"
 	mockEnvDroneStageName     string = "build"
 
+	mockEnvDroneTag                = ""
+	mockEnvDroneTargetBranch       = ""
 	mockEnvDroneBuildEvent         = "push"
 	mockEnvDroneBuildStatusSuccess = "success"
 	mockEnvDroneBuildStatusFailure = "failure"
@@ -46,6 +57,8 @@ func MockDroneInfo(status string) *Drone {
 	if status == "" {
 		status = mockEnvDroneBuildStatusSuccess
 	}
+
+	workspace, _ := getCurrentFolderPath()
 
 	owner := mockEnvDroneRepoOwner
 	email := mockEnvDroneCommitAuthorEmail
@@ -81,9 +94,11 @@ func MockDroneInfo(status string) *Drone {
 		},
 		//  build info
 		Build: Build{
+			WorkSpace:    workspace,
 			Status:       status,
 			Number:       buildNumber,
-			Tag:          "",
+			Tag:          mockEnvDroneTag,
+			TargetBranch: mockEnvDroneTargetBranch,
 			Link:         fmt.Sprintf("%s/%s/%s/%d", droneBaseUrl, owner, repoName, buildNumber),
 			Event:        mockEnvDroneBuildEvent,
 			StartAt:      mockEnvDroneBuildStarted,
@@ -117,6 +132,12 @@ func MockDroneInfo(status string) *Drone {
 			Kind:       mockEnvDroneStageKind,
 			Name:       mockEnvDroneStageName,
 		},
+		DroneSystem: DroneSystem{
+			Version:  mockEnvDroneSystemVersion,
+			Host:     mockEnvDroneSystemHost,
+			HostName: mockEnvDroneSystemHostName,
+			Proto:    mockEnvDroneSystemProto,
+		},
 	}
 
 	return &drone
@@ -124,6 +145,8 @@ func MockDroneInfo(status string) *Drone {
 
 func MockDroneInfoEnvFull(debug bool) {
 	setEnvBool("PLUGIN_DEBUG", debug)
+
+	workspace, _ := getCurrentFolderPath()
 
 	owner := mockEnvDroneRepoOwner
 	email := mockEnvDroneCommitAuthorEmail
@@ -145,9 +168,11 @@ func MockDroneInfoEnvFull(debug bool) {
 	setEnvStr(EnvDroneGitHttpUrl, repoHttpUrl)
 	setEnvStr(EnvDroneGitSshUrl, repoSshUrl)
 
+	setEnvStr(EnvDroneBuildWorkSpace, workspace)
 	setEnvStr(EnvDroneBuildStatus, mockEnvDroneBuildStatusSuccess)
 	setEnvU64(EnvDroneBuildNumber, mockEnvDroneBuildNumber)
-	setEnvStr(EnvDroneTag, "")
+	setEnvStr(EnvDroneTag, mockEnvDroneTag)
+	setEnvStr(EnvDroneTargetBranch, mockEnvDroneTargetBranch)
 	setEnvStr(EnvDroneBuildLink, fmt.Sprintf("%s/%s/%s/%d", droneBaseUrl, owner, repoName, buildNumber))
 	setEnvStr(EnvDroneBuildEvent, mockEnvDroneBuildEvent)
 	setEnvU64(EnvDroneBuildStarted, mockEnvDroneBuildStarted)
@@ -174,6 +199,11 @@ func MockDroneInfoEnvFull(debug bool) {
 	setEnvStr(EnvDroneStageType, mockEnvDroneStageType)
 	setEnvStr(EnvDroneStageKind, mockEnvDroneStageKind)
 	setEnvStr(EnvDroneStageName, mockEnvDroneStageName)
+
+	setEnvStr(EnvDroneSystemVersion, mockEnvDroneSystemVersion)
+	setEnvStr(EnvDroneSystemHost, mockEnvDroneSystemHost)
+	setEnvStr(EnvDroneSystemHostName, mockEnvDroneSystemHostName)
+	setEnvStr(EnvDroneSystemProto, mockEnvDroneSystemProto)
 
 }
 
@@ -210,4 +240,13 @@ func setEnvU64(key string, val uint64) {
 	if err != nil {
 		log.Fatalf("set env key [%v] uint64 err: %v", key, err)
 	}
+}
+
+// getCurrentFolderPath can get run path this golang dir
+func getCurrentFolderPath() (string, error) {
+	_, file, _, ok := runtime.Caller(1)
+	if !ok {
+		return "", errors.New("can not get current file info")
+	}
+	return filepath.Dir(file), nil
 }

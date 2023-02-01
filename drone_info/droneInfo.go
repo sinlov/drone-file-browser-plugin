@@ -45,16 +45,24 @@ const (
 	// @doc https://docs.drone.io/pipeline/environment/reference/drone-repo-scm/
 	EnvDroneRepoScm = "DRONE_REPO_SCM"
 
-	EnvDroneBuildStatus   = "DRONE_BUILD_STATUS"
-	EnvDroneBuildNumber   = "DRONE_BUILD_NUMBER"
-	EnvDroneBuildLink     = "DRONE_BUILD_LINK"
-	EnvDroneBuildEvent    = "DRONE_BUILD_EVENT"
-	EnvDroneBuildStarted  = "DRONE_BUILD_STARTED"
-	EnvDroneBuildFinished = "DRONE_BUILD_FINISHED"
+	// EnvDroneBuildWorkSpace
+	// drone’s working directory for a pipeline
+	// @doc https://docs.drone.io/pipeline/environment/reference/drone-workspace/
+	EnvDroneBuildWorkSpace = "DRONE_WORKSPACE"
+	EnvDroneBuildStatus    = "DRONE_BUILD_STATUS"
+	EnvDroneBuildNumber    = "DRONE_BUILD_NUMBER"
+	EnvDroneBuildLink      = "DRONE_BUILD_LINK"
+	EnvDroneBuildEvent     = "DRONE_BUILD_EVENT"
+	EnvDroneBuildStarted   = "DRONE_BUILD_STARTED"
+	EnvDroneBuildFinished  = "DRONE_BUILD_FINISHED"
 
-	EnvDroneTag      = "DRONE_TAG"
-	EnvDronePR       = "DRONE_PULL_REQUEST"
-	EnvDroneDeployTo = "DRONE_DEPLOY_TO"
+	EnvDroneTag = "DRONE_TAG"
+	// EnvDroneTargetBranch
+	// This environment variable can be used in conjunction with the source branch variable to get the pull request base and head branch.
+	// @doc https://docs.drone.io/pipeline/environment/reference/drone-target-branch/
+	EnvDroneTargetBranch = "DRONE_TARGET_BRANCH"
+	EnvDronePR           = "DRONE_PULL_REQUEST"
+	EnvDroneDeployTo     = "DRONE_DEPLOY_TO"
 
 	// EnvDroneStageStarted
 	// @doc https://docs.drone.io/pipeline/environment/reference/drone-stage-started/
@@ -96,6 +104,22 @@ const (
 	// by env:DRONE_FAILED_STEPS
 	// @doc https://docs.drone.io/pipeline/environment/reference/drone-failed-steps/
 	EnvDroneFailedSteps = "DRONE_FAILED_STEPS"
+
+	// EnvDroneSystemVersion
+	// Provides the version of the Drone server.
+	// @doc https://docs.drone.io/pipeline/environment/reference/drone-system-version/
+	EnvDroneSystemVersion = "DRONE_SYSTEM_VERSION"
+	// EnvDroneSystemHost
+	// Provides the hostname used by the Drone server. This can be combined with the protocol to construct to the server url.
+	// @doc https://docs.drone.io/pipeline/environment/reference/drone-system-host/
+	EnvDroneSystemHost = "DRONE_SYSTEM_HOST"
+	// EnvDroneSystemHostName
+	// @doc https://docs.drone.io/pipeline/environment/reference/drone-system-hostname/
+	EnvDroneSystemHostName = "DRONE_SYSTEM_HOSTNAME"
+	// EnvDroneSystemProto
+	// https or http
+	// @doc https://docs.drone.io/pipeline/environment/reference/drone-system-proto/
+	EnvDroneSystemProto = "DRONE_SYSTEM_PROTO"
 )
 
 type (
@@ -145,9 +169,19 @@ type (
 
 	// Build info
 	Build struct {
-		Status string //  providers the current build status
-		Number uint64 //  providers the current build number
-		Tag    string //  providers the current build tag
+		// WorkSpace
+		// drone’s working directory for a pipeline
+		// by env:DRONE_WORKSPACE
+		// @doc https://docs.drone.io/pipeline/environment/reference/drone-workspace/
+		WorkSpace string
+		Status    string //  providers the current build status
+		Number    uint64 //  providers the current build number
+		Tag       string //  providers the current build tag
+		// TargetBranch
+		// by env:DRONE_TARGET_BRANCH
+		// This environment variable can be used in conjunction with the source branch variable to get the pull request base and head branch.
+		// @doc https://docs.drone.io/pipeline/environment/reference/drone-target-branch/
+		TargetBranch string
 		// Link
 		// by env:DRONE_BUILD_LINK
 		// @doc https://docs.drone.io/pipeline/environment/reference/drone-build-link/
@@ -263,11 +297,36 @@ type (
 		Avatar string //  providers the author avatar for the current commit
 	}
 
+	DroneSystem struct {
+		// Version
+		// by env: DRONE_SYSTEM_VERSION
+		// Provides the version of the Drone server.
+		// @doc https://docs.drone.io/pipeline/environment/reference/drone-system-version/
+		Version string
+		// Host
+		// by env:DRONE_SYSTEM_HOST
+		// Provides the host used by the Drone server. This can be combined with the protocol to construct to the server url.
+		// @doc https://docs.drone.io/pipeline/environment/reference/drone-system-host/
+		Host string
+		// HostName
+		// by env:DRONE_SYSTEM_HOSTNAME
+		// Provides the hostname used by the Drone server. This can be combined with the protocol to construct to the server url.
+		// @doc https://docs.drone.io/pipeline/environment/reference/drone-system-hostname/
+		HostName string
+		// Proto
+		// by env:DRONE_SYSTEM_PROTO
+		// Provides the protocol used by the Drone server. This can be combined with the hostname to construct to the server url.
+		// https or http
+		// @doc https://docs.drone.io/pipeline/environment/reference/drone-system-proto/
+		Proto string
+	}
+
 	// Drone drone info
 	Drone struct {
-		Repo   Repo
-		Build  Build
-		Commit Commit
-		Stage  Stage
+		Repo        Repo
+		Build       Build
+		Commit      Commit
+		Stage       Stage
+		DroneSystem DroneSystem
 	}
 )

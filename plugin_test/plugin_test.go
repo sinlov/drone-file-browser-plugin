@@ -3,7 +3,9 @@ package plugin_test
 import (
 	"github.com/sinlov/drone-file-browser-plugin/drone_info"
 	"github.com/sinlov/drone-file-browser-plugin/plugin"
+	"github.com/sinlov/filebrowser-client/web_api"
 	"github.com/stretchr/testify/assert"
+	"os"
 	"testing"
 )
 
@@ -20,6 +22,7 @@ func TestPluginSendMode(t *testing.T) {
 
 	// use env:ENV_DEBUG
 	p.Config.Debug = envDebug
+	testDataFolderAbsPath, err := getOrCreateTestDataFolderFullPath()
 	testDataDistFolderPath, err := initTestDataPostFileDir()
 	if err != nil {
 		t.Error(err)
@@ -61,7 +64,7 @@ func TestPluginSendMode(t *testing.T) {
 	}
 
 	p.Config.FileBrowserSendModeConfig.FileBrowserTargetDistRootPath = mockFileBrowserTargetDistRootPath
-	p.Config.FileBrowserSendModeConfig.FileBrowserTargetFileRegular = mockFileBrowserTargetFileRegular
+	p.Config.FileBrowserSendModeConfig.FileBrowserTargetFileRegular = mockFileBrowserTargetFileRegularFail
 
 	p.Config.TimeoutSecond = defTimeoutSecond
 	p.Config.FileBrowserBaseConfig.FileBrowserTimeoutPushSecond = defTimeoutFileSecond
@@ -71,8 +74,42 @@ func TestPluginSendMode(t *testing.T) {
 	assert.Equal(t, "sinlov", p.Drone.Repo.OwnerName)
 
 	err = p.Exec()
+	if err == nil {
+		t.Error("args p.Drone.Build.WorkSpace should be catch!")
+	}
+
+	// change right workspace
+	p.Drone.Build.WorkSpace = testDataFolderAbsPath
+	if err == nil {
+		t.Error("args p.Config.FileBrowserSendModeConfig.FileBrowserTargetFileRegular should be catch!")
+	}
+
+	p.Config.FileBrowserSendModeConfig.FileBrowserShareLinkEnable = true
+	p.Config.FileBrowserSendModeConfig.FileBrowserShareLinkAutoPasswordEnable = true
+	p.Config.FileBrowserSendModeConfig.FileBrowserShareLinkUnit = web_api.ShareUnitHours
+	p.Config.FileBrowserSendModeConfig.FileBrowserShareLinkExpires = 4
+	// change right file regular for more than one
+	p.Config.FileBrowserSendModeConfig.FileBrowserTargetFileRegular = mockFileBrowserTargetFileRegular
+
+	err = p.Exec()
 	if err != nil {
 		t.Fatal(err)
 	}
 
+	assert.NotEqual(t, "", os.Getenv(plugin.EnvPluginDroneFileBrowserShareRemotePath))
+	assert.NotEqual(t, "", os.Getenv(plugin.EnvPluginDroneFileBrowserSharePage))
+	downloadUrl := os.Getenv(plugin.EnvPluginDroneFileBrowserShareDownloadUrl)
+	assert.NotEqual(t, "", downloadUrl)
+	t.Logf("download url: %s", downloadUrl)
+
+	// change right file regular for more than one
+	p.Config.FileBrowserSendModeConfig.FileBrowserTargetFileRegular = mockFileBrowserTargetFileRegularOne
+
+	err = p.Exec()
+	if err != nil {
+		t.Fatal(err)
+	}
+	downloadUrl = os.Getenv(plugin.EnvPluginDroneFileBrowserShareDownloadUrl)
+	assert.NotEqual(t, "", downloadUrl)
+	t.Logf("download url: %s", downloadUrl)
 }
