@@ -16,16 +16,18 @@
 
 ```yaml
 steps:
-  - name: drone-plugin-template
+  - name: drone-file-browser-send
     image: sinlov/drone-file-browser-plugin:latest
     pull: if-not-exists
     settings:
-      file_browser_host: http://127.0.0.1 # host of file_browser # must set args, file_browser host
+      file_browser_host: # must set args, file_browser host like http://127.0.0.1
+        from_secret: file_browser_host
       file_browser_username: # must set args, file_browser username
         # https://docs.drone.io/pipeline/environment/syntax/#from-secrets
         from_secret: file_browser_user_name
       file_browser_user_password: # must set args, file_browser user password
         from_secret: file_browser_user_password
+      file_browser_work_space: "" # file_browser work space. default "" will use env:DRONE_WORKSPACE
       file_browser_remote_root_path: dist/ # must set args, send to file_browser base path
       file_browser_dist_type: git # must set args, type of dist file graph only can use: git, custom
       file_browser_target_dist_root_path: dist/ # must set args, path of file_browser root default: dist/
@@ -39,19 +41,21 @@ steps:
 
 ```yaml
 steps:
-  - name: drone-plugin-template
+  - name: drone-file-browser-send
     image: sinlov/drone-file-browser-plugin:latest
     pull: if-not-exists
     settings:
       debug: false # plugin debug switch
       timeout_second: 10 # api timeout default: 10
       file_browser_timeout_push_second: 1 # push each file timeout push second, must gather than 60.default: 60
-      file_browser_host: http://127.0.0.1 # host of file_browser # must set args, file_browser host
+      file_browser_host: # must set args, file_browser host like http://127.0.0.1
+        from_secret: file_browser_host
       file_browser_username: # must set args, file_browser username
         # https://docs.drone.io/pipeline/environment/syntax/#from-secrets
         from_secret: file_browser_user_name
       file_browser_user_password: # must set args, file_browser user password
         from_secret: file_browser_user_password
+      file_browser_work_space: "" # file_browser work space. default "" will use env:DRONE_WORKSPACE
       file_browser_work_mode: send # 1.0 only support send 
       file_browser_remote_root_path: dist/ # must set args, send to file_browser base path
       file_browser_dist_type: git # must set args, type of dist file graph only can use: git, custom

@@ -39,6 +39,7 @@ func action(c *cli.Context) error {
 			FileBrowserUsername:          c.String("config.file_browser_username"),
 			FileBrowserUserPassword:      c.String("config.file_browser_user_password"),
 			FileBrowserTimeoutPushSecond: c.Uint("config.file_browser_timeout_push_second"),
+			FileBrowserWorkSpace:         c.String("config.file_browser_work_space"),
 		},
 
 		FileBrowserWorkMode: c.String("config.file_browser_work_mode"),
@@ -97,6 +98,11 @@ func pluginFlag() []cli.Flag {
 			Name:    "config.file_browser_user_password,file_browser_user_password",
 			Usage:   "must set args, file_browser user password",
 			EnvVars: []string{"PLUGIN_FILE_BROWSER_USER_PASSWORD"},
+		},
+		&cli.StringFlag{
+			Name:    "config.file_browser_work_space,file_browser_work_space",
+			Usage:   fmt.Sprintf("file_browser work space. default will use env:%s", drone_info.EnvDroneBuildWorkSpace),
+			EnvVars: []string{"PLUGIN_FILE_BROWSER_WORK_SPACE"},
 		},
 		&cli.UintFlag{
 			Name:    "config.file_browser_timeout_push_second,file_browser_timeout_push_second",

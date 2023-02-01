@@ -80,6 +80,8 @@ func TestPluginSendMode(t *testing.T) {
 
 	// change right workspace
 	p.Drone.Build.WorkSpace = testDataFolderAbsPath
+	p.Config.FileBrowserBaseConfig.FileBrowserWorkSpace = p.Drone.Build.WorkSpace
+
 	if err == nil {
 		t.Error("args p.Config.FileBrowserSendModeConfig.FileBrowserTargetFileRegular should be catch!")
 	}

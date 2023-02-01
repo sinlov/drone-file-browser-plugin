@@ -58,6 +58,10 @@ func (p *Plugin) Exec() error {
 	if p.Config.FileBrowserBaseConfig.FileBrowserTimeoutPushSecond < 60 {
 		p.Config.FileBrowserBaseConfig.FileBrowserTimeoutPushSecond = 60
 	}
+	// check default p.Config.FileBrowserBaseConfig.FileBrowserWorkSpace
+	if p.Config.FileBrowserBaseConfig.FileBrowserWorkSpace == "" {
+		p.Config.FileBrowserBaseConfig.FileBrowserWorkSpace = p.Drone.Build.WorkSpace
+	}
 
 	fileBrowserClient, err := file_browser_client.NewClient(
 		p.Config.FileBrowserBaseConfig.FileBrowserUsername,
@@ -133,7 +137,7 @@ func workOnSend(p *Plugin) error {
 			renderPath,
 		)
 	}
-	targetRootPath := filepath.Join(p.Drone.Build.WorkSpace, sendModeConfig.FileBrowserTargetDistRootPath)
+	targetRootPath := filepath.Join(p.Config.FileBrowserBaseConfig.FileBrowserWorkSpace, sendModeConfig.FileBrowserTargetDistRootPath)
 	if p.Config.Debug {
 		log.Printf("debug: workOnSend remoteRealRootPath: %s", remoteRealRootPath)
 		log.Printf("debug: workOnSend targetRootPath: %s", targetRootPath)

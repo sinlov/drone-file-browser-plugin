@@ -33,6 +33,7 @@ type (
 		FileBrowserUsername          string
 		FileBrowserUserPassword      string
 		FileBrowserTimeoutPushSecond uint
+		FileBrowserWorkSpace         string
 	}
 
 	FileBrowserSendModeConfig struct {
