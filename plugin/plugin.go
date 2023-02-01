@@ -139,6 +139,10 @@ func workOnSend(p *Plugin) error {
 	}
 	targetRootPath := filepath.Join(p.Config.FileBrowserBaseConfig.FileBrowserWorkSpace, sendModeConfig.FileBrowserTargetDistRootPath)
 	if p.Config.Debug {
+		log.Printf("debug: workOnSend fileBrowserDistType: %s", sendModeConfig.FileBrowserDistType)
+		if sendModeConfig.FileBrowserDistType == DistTypeCustom {
+			log.Printf("debug: workOnSend fileBrowserDistGraph: %s", sendModeConfig.FileBrowserDistGraph)
+		}
 		log.Printf("debug: workOnSend remoteRealRootPath: %s", remoteRealRootPath)
 		log.Printf("debug: workOnSend targetRootPath: %s", targetRootPath)
 		log.Printf("debug: workOnSend fileBrowserWorkSpace: %s", p.Config.FileBrowserBaseConfig.FileBrowserWorkSpace)

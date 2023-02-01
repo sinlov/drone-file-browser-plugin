@@ -132,13 +132,13 @@ func pluginFlag() []cli.Flag {
 		&cli.StringFlag{
 			Name:    "config.file_browser_remote_root_path,file_browser_remote_root_path",
 			Usage:   "must set args, this will append by file_browser_dist_type at remote",
-			EnvVars: []string{"PLUGIN_FILE_BROWSER_DIST_TYPE"},
+			EnvVars: []string{"PLUGIN_FILE_BROWSER_REMOTE_ROOT_PATH"},
 		},
 		&cli.StringFlag{
 			Name:    "config.file_browser_target_dist_root_path,file_browser_target_dist_root_path",
 			Usage:   "path of file_browser local work on root, can set \"\"",
 			Value:   "",
-			EnvVars: []string{"PLUGIN_FILE_BROWSER_TARGET_DIST_ROOT"},
+			EnvVars: []string{"PLUGIN_FILE_BROWSER_TARGET_DIST_ROOT_PATH"},
 		},
 		&cli.StringFlag{
 			Name:    "config.file_browser_target_file_regular,file_browser_target_file_regular",
