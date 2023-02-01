@@ -242,10 +242,11 @@ func shareBySendConfig(p Plugin, remotePath string, isDir bool) error {
 			log.Printf("debug: => share pwd : %s", sharePost.DownloadPasswd)
 		}
 	}
-	setEnvFromStr(EnvPluginDroneFileBrowserShareRemotePath, sharePost.RemotePath)
 	setEnvFromStr(EnvPluginDroneFileBrowserSharePage, sharePost.DownloadPage)
 	setEnvFromStr(EnvPluginDroneFileBrowserSharePasswd, sharePost.DownloadPasswd)
-	setEnvFromStr(EnvPluginDroneFileBrowserShareDownloadUrl, sharePost.DownloadUrl)
+	//setEnvFromStr(EnvPluginDroneFileBrowserShareDownloadUrl, sharePost.DownloadUrl)
+	setEnvFromStr(EnvPluginDroneFileBrowserShareUser, p.Config.FileBrowserBaseConfig.FileBrowserUsername)
+	setEnvFromStr(EnvPluginDroneFileBrowserShareRemotePath, remotePath)
 	return nil
 }
 

@@ -92,6 +92,11 @@ func TestPluginSendMode(t *testing.T) {
 
 	// change FileRegular
 	p.Config.FileBrowserSendModeConfig.FileBrowserTargetFileRegular = mockFileBrowserTargetFileRegularOne
+	t.Logf("-> share by file browser work space: %s", p.Config.FileBrowserBaseConfig.FileBrowserWorkSpace)
+	t.Logf("-> share by dist type: %s", p.Config.FileBrowserSendModeConfig.FileBrowserDistType)
+	t.Logf("-> share by dist remote path: %s", p.Config.FileBrowserSendModeConfig.FileBrowserRemoteRootPath)
+	t.Logf("-> share by file target path: %s", p.Config.FileBrowserSendModeConfig.FileBrowserTargetDistRootPath)
+	t.Logf("-> share by file target regular: %s", p.Config.FileBrowserSendModeConfig.FileBrowserTargetFileRegular)
 
 	err = p.Exec()
 	if err != nil {
@@ -99,30 +104,52 @@ func TestPluginSendMode(t *testing.T) {
 	}
 	assert.NotEqual(t, "", os.Getenv(plugin.EnvPluginDroneFileBrowserShareRemotePath))
 	assert.NotEqual(t, "", os.Getenv(plugin.EnvPluginDroneFileBrowserSharePage))
-	downloadUrl := os.Getenv(plugin.EnvPluginDroneFileBrowserShareDownloadUrl)
-	assert.NotEqual(t, "", downloadUrl)
-	t.Logf("download url: %s", downloadUrl)
+	t.Logf("share page: %s", os.Getenv(plugin.EnvPluginDroneFileBrowserSharePage))
+	t.Logf("share password: %s", os.Getenv(plugin.EnvPluginDroneFileBrowserSharePasswd))
+	t.Logf("share user: %s", os.Getenv(plugin.EnvPluginDroneFileBrowserShareUser))
+	t.Logf("share path: %s", os.Getenv(plugin.EnvPluginDroneFileBrowserShareRemotePath))
+	t.Logf("")
 
 	p.Config.FileBrowserSendModeConfig.FileBrowserDistType = plugin.DistTypeGit
 	// change right file regular for one file
 	p.Config.FileBrowserSendModeConfig.FileBrowserTargetFileRegular = mockFileBrowserTargetFileRegularOne
 
+	t.Logf("-> share by file browser work space: %s", p.Config.FileBrowserBaseConfig.FileBrowserWorkSpace)
+	t.Logf("-> share by dist type: %s", p.Config.FileBrowserSendModeConfig.FileBrowserDistType)
+	t.Logf("-> share by dist remote path: %s", p.Config.FileBrowserSendModeConfig.FileBrowserRemoteRootPath)
+	t.Logf("-> share by file target path: %s", p.Config.FileBrowserSendModeConfig.FileBrowserTargetDistRootPath)
+	t.Logf("-> share by file target regular: %s", p.Config.FileBrowserSendModeConfig.FileBrowserTargetFileRegular)
+
 	err = p.Exec()
 	if err != nil {
 		t.Fatal(err)
 	}
-	downloadUrl = os.Getenv(plugin.EnvPluginDroneFileBrowserShareDownloadUrl)
-	assert.NotEqual(t, "", downloadUrl)
-	t.Logf("download url: %s", downloadUrl)
+	assert.NotEqual(t, "", os.Getenv(plugin.EnvPluginDroneFileBrowserShareRemotePath))
+	assert.NotEqual(t, "", os.Getenv(plugin.EnvPluginDroneFileBrowserSharePage))
+	t.Logf("share page: %s", os.Getenv(plugin.EnvPluginDroneFileBrowserSharePage))
+	t.Logf("share password: %s", os.Getenv(plugin.EnvPluginDroneFileBrowserSharePasswd))
+	t.Logf("share user: %s", os.Getenv(plugin.EnvPluginDroneFileBrowserShareUser))
+	t.Logf("share path: %s", os.Getenv(plugin.EnvPluginDroneFileBrowserShareRemotePath))
+	t.Logf("")
 
 	// change right file regular for more than one
 	p.Config.FileBrowserSendModeConfig.FileBrowserTargetFileRegular = mockFileBrowserTargetFileRegular
 
+	t.Logf("-> share by file browser work space: %s", p.Config.FileBrowserBaseConfig.FileBrowserWorkSpace)
+	t.Logf("-> share by dist type: %s", p.Config.FileBrowserSendModeConfig.FileBrowserDistType)
+	t.Logf("-> share by dist remote path: %s", p.Config.FileBrowserSendModeConfig.FileBrowserRemoteRootPath)
+	t.Logf("-> share by file target path: %s", p.Config.FileBrowserSendModeConfig.FileBrowserTargetDistRootPath)
+	t.Logf("-> share by file target regular: %s", p.Config.FileBrowserSendModeConfig.FileBrowserTargetFileRegular)
+
 	err = p.Exec()
 	if err != nil {
 		t.Fatal(err)
 	}
-	downloadUrl = os.Getenv(plugin.EnvPluginDroneFileBrowserShareDownloadUrl)
-	assert.NotEqual(t, "", downloadUrl)
-	t.Logf("download url: %s", downloadUrl)
+	assert.NotEqual(t, "", os.Getenv(plugin.EnvPluginDroneFileBrowserShareRemotePath))
+	assert.NotEqual(t, "", os.Getenv(plugin.EnvPluginDroneFileBrowserSharePage))
+	t.Logf("share page: %s", os.Getenv(plugin.EnvPluginDroneFileBrowserSharePage))
+	t.Logf("share password: %s", os.Getenv(plugin.EnvPluginDroneFileBrowserSharePasswd))
+	t.Logf("share user: %s", os.Getenv(plugin.EnvPluginDroneFileBrowserShareUser))
+	t.Logf("share path: %s", os.Getenv(plugin.EnvPluginDroneFileBrowserShareRemotePath))
+	t.Logf("")
 }

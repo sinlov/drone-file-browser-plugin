@@ -7,10 +7,11 @@ const (
 	DistTypeGit    = "git"
 	DistTypeCustom = "custom"
 
-	EnvPluginDroneFileBrowserShareRemotePath  = "PLUGIN_DRONE_FILE_BROWSER_SHARE_REMOTE_PATH"
 	EnvPluginDroneFileBrowserSharePage        = "PLUGIN_DRONE_FILE_BROWSER_SHARE_PAGE"
 	EnvPluginDroneFileBrowserSharePasswd      = "PLUGIN_DRONE_FILE_BROWSER_SHARE_PASSWD"
 	EnvPluginDroneFileBrowserShareDownloadUrl = "PLUGIN_DRONE_FILE_BROWSER_SHARE_DOWNLOAD_URL"
+	EnvPluginDroneFileBrowserShareUser        = "PLUGIN_DRONE_FILE_BROWSER_SHARE_USER"
+	EnvPluginDroneFileBrowserShareRemotePath  = "PLUGIN_DRONE_FILE_BROWSER_SHARE_REMOTE_PATH"
 )
 
 var (
