@@ -1,45 +1,66 @@
 package plugin
 
 const (
-	msgTypeText        = "text"
-	msgTypePost        = "post"
-	msgTypeInteractive = "interactive"
+	WorkModeSend     = "send"
+	WorkModeDownload = "download"
+
+	DistTypeGit    = "git"
+	DistTypeCustom = "custom"
 )
 
 var (
-	// supportMsgType
-	supportMsgType = []string{
-		msgTypeText,
-		msgTypePost,
-		msgTypeInteractive,
+	// pluginWorkModeSupport
+	pluginWorkModeSupport = []string{
+		WorkModeSend,
+		WorkModeDownload,
+	}
+
+	// pluginDistTypeSupport
+	pluginDistTypeSupport = []string{
+		DistTypeGit,
+		DistTypeCustom,
 	}
 )
 
 type (
-	// Config plugin private config
-	Config struct {
-		Webhook string
-		Secret  string
-		MsgType string
+	FileBrowserBaseConfig struct {
+		FileBrowserHost              string
+		FileBrowserUsername          string
+		FileBrowserUserPassword      string
+		FileBrowserTimeoutPushSecond uint
+	}
 
-		FileBrowserTimeoutPushMin              uint
-		FileBrowserUsername                    string
-		FileBrowserUserPassword                string
-		FileBrowserDistRoot                    string
+	FileBrowserSendModeConfig struct {
 		FileBrowserDistType                    string
 		FileBrowserDistGraph                   string
+		FileBrowserRemoteRootPath              string
+		FileBrowserTargetDistRootPath          string
 		FileBrowserTargetFileRegular           string
 		FileBrowserShareLinkEnable             bool
 		FileBrowserShareLinkUnit               string
 		FileBrowserShareLinkExpires            uint
 		FileBrowserShareLinkAutoPasswordEnable bool
 		FileBrowserShareLinkPassword           string
+	}
 
-		Debug bool
-
-		TimeoutSecond                uint
-		DownloadEnable               bool
+	FileBrowserDownloadModeConfig struct {
+		FileBrowserDownloadEnable    bool
 		FileBrowserDownloadPath      string
 		FileBrowserDownloadLocalPath string
+	}
+
+	// Config plugin private config
+	Config struct {
+		Debug bool
+
+		TimeoutSecond uint
+
+		FileBrowserBaseConfig FileBrowserBaseConfig
+
+		FileBrowserWorkMode string
+
+		FileBrowserSendModeConfig FileBrowserSendModeConfig
+
+		FileBrowserDownloadModeConfig FileBrowserDownloadModeConfig
 	}
 )

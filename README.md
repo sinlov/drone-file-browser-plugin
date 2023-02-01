@@ -92,9 +92,9 @@ $ git config --global url."ssh://github.com/".insteadOf "https://github.com/"
 $ git ls-remote -q https://github.com/sinlov/drone-file-browser-plugin.git
 
 # test depends see full version
-$ go list -v -m -versions github.com/sinlov/drone-file-browser-plugin
+$ go list -mod=readonly -v -m -versions github.com/sinlov/drone-file-browser-plugin
 # or use last version add go.mod by script
-$ echo "go mod edit -require=$(go list -m -versions github.com/sinlov/drone-file-browser-plugin | awk '{print $1 "@" $NF}')"
+$ echo "go mod edit -require=$(go list -mod=readonly -m -versions github.com/sinlov/drone-file-browser-plugin | awk '{print $1 "@" $NF}')"
 $ echo "go mod vendor"
 ```
 
