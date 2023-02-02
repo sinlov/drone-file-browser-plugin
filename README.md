@@ -21,7 +21,6 @@ steps:
     # pull: if-not-exists
     settings:
       debug: false # plugin debug switch
-      timeout_second: 10 # api timeout default: 10
       file_browser:
         host: "http://127.0.0.1:80" # must set args, file_browser host like http://127.0.0.1:80
         username: # must set args, file_browser username

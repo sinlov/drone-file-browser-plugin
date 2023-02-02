@@ -36,7 +36,7 @@ func action(c *cli.Context) error {
 		TimeoutSecond: c.Uint("config.timeout_second"),
 
 		FileBrowserBaseConfig: plugin.FileBrowserBaseConfig{
-			FileBrowserHost:              c.String("config.file_browser.host"),
+			FileBrowserHost:              c.String("file_browser.host"),
 			FileBrowserUsername:          c.String("config.file_browser.username"),
 			FileBrowserUserPassword:      c.String("config.file_browser.user_password"),
 			FileBrowserTimeoutPushSecond: c.Uint("config.file_browser.timeout_push_second"),
@@ -62,7 +62,7 @@ func action(c *cli.Context) error {
 		FileBrowserDownloadModeConfig: plugin.FileBrowserDownloadModeConfig{
 			FileBrowserDownloadEnable:    c.Bool("config.file_browser.download.enable"),
 			FileBrowserDownloadPath:      c.String("config.file_browser.download.remote_path"),
-			FileBrowserDownloadLocalPath: c.String("config.file_browser_download.local_path"),
+			FileBrowserDownloadLocalPath: c.String("config.file_browser.download.local_path"),
 		},
 	}
 
@@ -89,7 +89,7 @@ func pluginFlag() []cli.Flag {
 
 		// FileBrowserBaseConfig
 		&cli.StringFlag{
-			Name:    "config.file_browser.host,file_browser.host",
+			Name:    "file_browser.host",
 			Usage:   "must set args, file_browser host",
 			EnvVars: []string{"PLUGIN_FILE_BROWSER_HOST"},
 		},
