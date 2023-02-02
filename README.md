@@ -79,6 +79,47 @@ steps:
         # - success
 ```
 
+- `1.x` drone-exec only support env
+
+- download by [https://github.com/sinlov/drone-file-browser-plugin/releases](https://github.com/sinlov/drone-file-browser-plugin/releases) to get platform binary, then has local path
+- binary path like `C:\Drone\drone-runner-exec\plugins\drone-file-browser-plugin.exe` can be drone run env like `EXEC_DRONE_FILE_BROWSER_PLUGIN_FULL_PATH`
+- env:EXEC_DRONE_FILE_BROWSER_PLUGIN_FULL_PATH can set at file which define as [DRONE_RUNNER_ENVFILE](https://docs.drone.io/runner/exec/configuration/reference/drone-runner-envfile/) to support each platform
+
+```yaml
+steps:
+  - name: drone-file-browser-send-exec # must has env EXEC_DRONE_FILE_BROWSER_PLUGIN_FULL_PATH and exec tools
+    environment:
+      PLUGIN_DEBUG: false
+      # PLUGIN_NTP_TARGET: "pool.ntp.org" # if not set will not sync
+      PLUGIN_TIMEOUT_SECOND: 10 # default 10
+      PLUGIN_FILE_BROWSER_TIMEOUT_PUSH_SECOND: 60 # push each file timeout push second, must gather than 60.default: 60
+      PLUGIN_FILE_BROWSER_HOST: "http://127.0.0.1:80" # must set args, file_browser host like http://127.0.0.1:80
+      PLUGIN_FILE_BROWSER_USERNAME: # must set args, file_browser username
+        # https://docs.drone.io/pipeline/environment/syntax/#from-secrets
+        from_secret: file_browser_user_name
+      PLUGIN_FILE_BROWSER_USER_PASSWORD: # must set args, file_browser user password
+        from_secret: file_browser_user_password
+      PLUGIN_FILE_BROWSER_REMOTE_ROOT_PATH: dist/ # must set args, send to file_browser base path
+      PLUGIN_FILE_BROWSER_TARGET_DIST_ROOT_PATH: dist/ # path of file_browser work on root, can set "". default: ""
+      PLUGIN_FILE_BROWSER_TARGET_FILE_REGULAR: .*.tar.gz # must set args, regular of send to file_browser under file_browser_target_dist_root_path
+      PLUGIN_FILE_BROWSER_SHARE_LINK_EXPIRES: 0 # if set 0, will allow share_link exist forever，default: 0
+      PLUGIN_FILE_BROWSER_SHARE_LINK_UNIT: days # take effect by open share_link, only can use as [ days hours minutes seconds ]
+      PLUGIN_FILE_BROWSER_SHARE_LINK_AUTO_PASSWORD_ENABLE: true # password of share_link auto , if open this will cover settings.file_browser_share_link_password. default: false
+    commands:
+      - ${EXEC_DRONE_FILE_BROWSER_PLUGIN_FULL_PATH} `
+        ""
+    when:
+      event: # https://docs.drone.io/pipeline/exec/syntax/conditions/#by-event
+        - promote
+        - rollback
+        - push
+        - pull_request
+        - tag
+      status: # only support failure/success,  both open will send anything
+        - failure
+        - success
+```
+
 ### settings.debug
 
 - if open `settings.debug` will try send file browser use `override` for debug.

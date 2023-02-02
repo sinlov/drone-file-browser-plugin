@@ -1,7 +1,7 @@
 .PHONY: test check clean build dist all
 #TOP_DIR := $(shell pwd)
 # each tag change this
-ENV_DIST_VERSION := v0.1.2
+ENV_DIST_VERSION := v1.0.0
 
 ROOT_NAME ?= drone-file-browser-plugin
 RUN_ARGS = -h

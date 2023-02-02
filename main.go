@@ -16,7 +16,7 @@ import (
 
 const (
 	// Version of cli
-	Version = "v0.1.2"
+	Version = "v1.0.0"
 	Name    = "drone-file-browser-plugin"
 )
 
