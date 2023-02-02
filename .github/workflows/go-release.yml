@@ -11,6 +11,9 @@ env:
   IMAGE_BUILD_OS_NAME: alpine
   IMAGE_NAME: drone-file-browser-plugin
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
