@@ -116,7 +116,7 @@ ${file_browser_remote_root_path}/
 {{ Repo.HostName }}/{{ Repo.GroupName }}/{{ Repo.ShortName }}/s/{{ Build.Number }}/{{ Stage.Name }}-{{ Build.Number }}-{{ Stage.FinishedTime }}
 ```
 
-template use struct `github.com/sinlov/drone-file-browser-plugin/drone_info/Drone`
+template use struct [Drone](https://github.com/sinlov/drone-info-tools/blob/main/drone_info/droneInfo.go#L335)
 
 # dev
 

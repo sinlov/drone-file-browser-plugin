@@ -1,8 +1,8 @@
 package plugin_test
 
 import (
-	"github.com/sinlov/drone-file-browser-plugin/drone_info"
 	"github.com/sinlov/drone-file-browser-plugin/plugin"
+	"github.com/sinlov/drone-info-tools/drone_info"
 	"github.com/sinlov/filebrowser-client/web_api"
 	"github.com/stretchr/testify/assert"
 	"os"

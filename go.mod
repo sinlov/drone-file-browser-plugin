@@ -29,6 +29,7 @@ require (
 	github.com/aymerick/raymond v2.0.2+incompatible
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
+	github.com/sinlov/drone-info-tools v1.0.1
 	github.com/sinlov/filebrowser-client v0.1.3
 	github.com/urfave/cli/v2 v2.23.7
 	gopkg.in/yaml.v3 v3.0.1 // indirect

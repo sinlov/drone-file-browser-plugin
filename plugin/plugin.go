@@ -2,9 +2,9 @@ package plugin
 
 import (
 	"fmt"
-	"github.com/sinlov/drone-file-browser-plugin/drone_info"
 	"github.com/sinlov/drone-file-browser-plugin/template"
 	"github.com/sinlov/drone-file-browser-plugin/tools"
+	"github.com/sinlov/drone-info-tools/drone_info"
 	"github.com/sinlov/filebrowser-client/file_browser_client"
 	"github.com/sinlov/filebrowser-client/tools/folder"
 	"github.com/sinlov/filebrowser-client/web_api"
