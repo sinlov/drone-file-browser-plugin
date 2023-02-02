@@ -1,4 +1,4 @@
-package plugin
+package file_browser_plugin
 
 import (
 	"fmt"
@@ -19,8 +19,8 @@ import (
 )
 
 type (
-	// Plugin plugin all config
-	Plugin struct {
+	// FileBrowserPlugin file_browser_plugin all config
+	FileBrowserPlugin struct {
 		Version           string
 		Drone             drone_info.Drone
 		Config            Config
@@ -28,7 +28,7 @@ type (
 	}
 )
 
-func (p *Plugin) Exec() error {
+func (p *FileBrowserPlugin) Exec() error {
 	if p.Config.Debug {
 		for _, e := range os.Environ() {
 			log.Println(e)
@@ -48,7 +48,7 @@ func (p *Plugin) Exec() error {
 	}
 
 	if !(tools.StrInArr(p.Config.FileBrowserWorkMode, pluginWorkModeSupport)) {
-		return fmt.Errorf("plugin file_browser_work_mode type only support: %v", pluginWorkModeSupport)
+		return fmt.Errorf("file_browser_plugin file_browser_work_mode type only support: %v", pluginWorkModeSupport)
 	}
 
 	// check default TimeoutSecond
@@ -81,7 +81,7 @@ func (p *Plugin) Exec() error {
 
 	switch p.Config.FileBrowserWorkMode {
 	default:
-		return fmt.Errorf("plugin file_browser_work_mode not support: %v", p.Config.FileBrowserWorkMode)
+		return fmt.Errorf("file_browser_plugin file_browser_work_mode not support: %v", p.Config.FileBrowserWorkMode)
 	case WorkModeSend:
 		err = workOnSend(p)
 	}
@@ -89,18 +89,18 @@ func (p *Plugin) Exec() error {
 	return err
 }
 
-func workOnSend(p *Plugin) error {
+func workOnSend(p *FileBrowserPlugin) error {
 	sendModeConfig := p.Config.FileBrowserSendModeConfig
 	if !(tools.StrInArr(sendModeConfig.FileBrowserDistType, pluginDistTypeSupport)) {
-		return fmt.Errorf("plugin file_browser_dist_type dist type only support: %v", pluginDistTypeSupport)
+		return fmt.Errorf("file_browser_plugin file_browser_dist_type dist type only support: %v", pluginDistTypeSupport)
 	}
 
 	if sendModeConfig.FileBrowserRemoteRootPath == "" {
-		return fmt.Errorf("plugin file_browser_remote_root_path not be empty")
+		return fmt.Errorf("file_browser_plugin file_browser_remote_root_path not be empty")
 	}
 
 	//if sendModeConfig.FileBrowserTargetDistRootPath == "" {
-	//	return fmt.Errorf("plugin file_browser_target_dist_root_path not be empty")
+	//	return fmt.Errorf("file_browser_plugin file_browser_target_dist_root_path not be empty")
 	//}
 
 	var remoteRealRootPath = strings.TrimRight(sendModeConfig.FileBrowserRemoteRootPath, "/")
@@ -215,7 +215,7 @@ func workOnSend(p *Plugin) error {
 	return nil
 }
 
-func shareBySendConfig(p Plugin, remotePath string, isDir bool) error {
+func shareBySendConfig(p FileBrowserPlugin, remotePath string, isDir bool) error {
 	expires := strconv.Itoa(int(p.Config.FileBrowserSendModeConfig.FileBrowserShareLinkExpires))
 	passWord := p.Config.FileBrowserSendModeConfig.FileBrowserShareLinkPassword
 	if p.Config.FileBrowserSendModeConfig.FileBrowserShareLinkAutoPasswordEnable {
@@ -236,7 +236,7 @@ func shareBySendConfig(p Plugin, remotePath string, isDir bool) error {
 	if errSendShareFile != nil {
 		return errSendShareFile
 	}
-	log.Printf("drone-file-browser-plugin version %s", p.Version)
+	log.Printf("drone-file-browser-file_browser_plugin version %s", p.Version)
 	log.Printf("=> share page: %s", sharePost.DownloadPage)
 	if passWord != "" {
 		log.Printf("=> share pwd: %s", sharePost.DownloadPasswd)

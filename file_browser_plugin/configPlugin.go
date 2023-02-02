@@ -1,4 +1,4 @@
-package plugin
+package file_browser_plugin
 
 const (
 	WorkModeSend     = "send"
@@ -60,7 +60,7 @@ type (
 		FileBrowserDownloadLocalPath string
 	}
 
-	// Config plugin private config
+	// Config file_browser_plugin private config
 	Config struct {
 		Debug bool
 

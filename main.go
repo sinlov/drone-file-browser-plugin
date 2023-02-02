@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/sinlov/drone-file-browser-plugin/plugin"
+	"github.com/sinlov/drone-file-browser-plugin/file_browser_plugin"
 	"github.com/sinlov/filebrowser-client/web_api"
 	"log"
 	"os"
@@ -30,12 +30,12 @@ func action(c *cli.Context) error {
 		log.Printf("debug: load droneInfo finish at link: %v\n", drone.Build.Link)
 	}
 
-	config := plugin.Config{
+	config := file_browser_plugin.Config{
 
 		Debug:         c.Bool("config.debug"),
 		TimeoutSecond: c.Uint("config.timeout_second"),
 
-		FileBrowserBaseConfig: plugin.FileBrowserBaseConfig{
+		FileBrowserBaseConfig: file_browser_plugin.FileBrowserBaseConfig{
 			FileBrowserHost:              c.String("config.file_browser_host"),
 			FileBrowserUsername:          c.String("config.file_browser_username"),
 			FileBrowserUserPassword:      c.String("config.file_browser_user_password"),
@@ -45,7 +45,7 @@ func action(c *cli.Context) error {
 
 		FileBrowserWorkMode: c.String("config.file_browser_work_mode"),
 
-		FileBrowserSendModeConfig: plugin.FileBrowserSendModeConfig{
+		FileBrowserSendModeConfig: file_browser_plugin.FileBrowserSendModeConfig{
 			FileBrowserDistType:           c.String("config.file_browser_dist_type"),
 			FileBrowserDistGraph:          c.String("config.file_browser_dist_graph"),
 			FileBrowserRemoteRootPath:     c.String("config.file_browser_remote_root_path"),
@@ -59,14 +59,14 @@ func action(c *cli.Context) error {
 			FileBrowserShareLinkPassword:           c.String("config.file_browser_share_link_password"),
 		},
 
-		FileBrowserDownloadModeConfig: plugin.FileBrowserDownloadModeConfig{
+		FileBrowserDownloadModeConfig: file_browser_plugin.FileBrowserDownloadModeConfig{
 			FileBrowserDownloadEnable:    c.Bool("config.file_browser_download_enable"),
 			FileBrowserDownloadPath:      c.String("config.file_browser_download_remote_path"),
 			FileBrowserDownloadLocalPath: c.String("config.file_browser_download_local_path"),
 		},
 	}
 
-	p := plugin.Plugin{
+	p := file_browser_plugin.FileBrowserPlugin{
 		Version: Version,
 		Drone:   drone,
 		Config:  config,
@@ -82,10 +82,10 @@ func action(c *cli.Context) error {
 }
 
 // pluginFlag
-// set plugin flag at here
+// set file_browser_plugin flag at here
 func pluginFlag() []cli.Flag {
 	return []cli.Flag{
-		// plugin start
+		// file_browser_plugin start
 		&cli.StringFlag{
 			Name:    "config.file_browser_host,file_browser_host",
 			Usage:   "must set args, file_browser host",
@@ -115,13 +115,13 @@ func pluginFlag() []cli.Flag {
 		&cli.StringFlag{
 			Name:    "config.file_browser_work_mode,file_browser_work_mode",
 			Usage:   "must set args, work mode only can use: send, download",
-			Value:   plugin.WorkModeSend,
+			Value:   file_browser_plugin.WorkModeSend,
 			EnvVars: []string{"PLUGIN_FILE_BROWSER_WORK_MODE"},
 		},
 		&cli.StringFlag{
 			Name:    "config.file_browser_dist_type,file_browser_dist_type",
 			Usage:   "must set args, type of dist file graph only can use: git, custom",
-			Value:   plugin.DistTypeGit,
+			Value:   file_browser_plugin.DistTypeGit,
 			EnvVars: []string{"PLUGIN_FILE_BROWSER_DIST_TYPE"},
 		},
 		&cli.StringFlag{
@@ -187,15 +187,15 @@ func pluginFlag() []cli.Flag {
 		//	Usage:   "",
 		//	EnvVars: []string{"PLUGIN_new_arg"},
 		//},
-		// plugin end
+		// file_browser_plugin end
 	}
 }
 
 // pluginHideFlag
-// set plugin hide flag at here
+// set file_browser_plugin hide flag at here
 func pluginHideFlag() []cli.Flag {
 	return []cli.Flag{
-		// plugin hidden start
+		// file_browser_plugin hidden start
 		&cli.UintFlag{
 			Name:    "config.timeout_second,timeout_second",
 			Usage:   "do request timeout setting second. gather than 10",
@@ -222,7 +222,7 @@ func pluginHideFlag() []cli.Flag {
 			Hidden:  true,
 			EnvVars: []string{"PLUGIN_FILE_BROWSER_DOWNLOAD_LOCAL_PATH"},
 		},
-		// plugin hidden end
+		// file_browser_plugin hidden end
 	}
 }
 
@@ -462,7 +462,7 @@ func droneInfoFlag() []cli.Flag {
 func main() {
 	app := cli.NewApp()
 	app.Version = Version
-	app.Name = "Drone Plugin"
+	app.Name = "Drone FileBrowserPlugin"
 	app.Usage = ""
 	year := time.Now().Year()
 	app.Copyright = fmt.Sprintf("© 2022-%d sinlov", year)
