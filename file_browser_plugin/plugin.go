@@ -21,6 +21,7 @@ import (
 type (
 	// FileBrowserPlugin file_browser_plugin all config
 	FileBrowserPlugin struct {
+		Name              string
 		Version           string
 		Drone             drone_info.Drone
 		Config            Config
@@ -96,6 +97,7 @@ func (p *FileBrowserPlugin) Exec() error {
 		err = workOnSend(p)
 	}
 
+	log.Printf("=> plugin %s version %s", p.Name, p.Version)
 	return err
 }
 
@@ -246,7 +248,6 @@ func shareBySendConfig(p FileBrowserPlugin, remotePath string, isDir bool) error
 	if errSendShareFile != nil {
 		return errSendShareFile
 	}
-	log.Printf("drone-file-browser-file_browser_plugin version %s", p.Version)
 	log.Printf("=> share page: %s", sharePost.DownloadPage)
 	if passWord != "" {
 		log.Printf("=> share pwd: %s", sharePost.DownloadPasswd)

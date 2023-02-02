@@ -17,6 +17,7 @@ import (
 const (
 	// Version of cli
 	Version = "v0.1.2"
+	Name    = "drone-file-browser-plugin"
 )
 
 func action(c *cli.Context) error {
@@ -67,6 +68,7 @@ func action(c *cli.Context) error {
 	}
 
 	p := file_browser_plugin.FileBrowserPlugin{
+		Name:    Name,
 		Version: Version,
 		Drone:   drone,
 		Config:  config,

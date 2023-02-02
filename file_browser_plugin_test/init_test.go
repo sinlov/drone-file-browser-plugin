@@ -18,6 +18,7 @@ import (
 const (
 	defTimeoutSecond     = 10
 	defTimeoutFileSecond = 30
+	mockName             = "drone-file-browser-plugin"
 	mockVersion          = "v0.0.0"
 
 	mockFileBrowserRemoteRootPath        = "dist/"

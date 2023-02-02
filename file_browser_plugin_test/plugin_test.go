@@ -13,6 +13,7 @@ func TestPluginSendMode(t *testing.T) {
 	// mock FileBrowserPlugin
 	t.Logf("~> mock FileBrowserPlugin")
 	p := file_browser_plugin.FileBrowserPlugin{
+		Name:    mockName,
 		Version: mockVersion,
 	}
 	// do FileBrowserPlugin
