@@ -22,9 +22,7 @@ env:
   IMAGE_NAME: drone-file-browser-plugin
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -78,9 +76,7 @@ env:
   IMAGE_NAME: drone-file-browser-plugin
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
