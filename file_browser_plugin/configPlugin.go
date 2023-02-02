@@ -7,14 +7,25 @@ const (
 	DistTypeGit    = "git"
 	DistTypeCustom = "custom"
 
-	EnvPluginDroneFileBrowserSharePage        = "PLUGIN_DRONE_FILE_BROWSER_SHARE_PAGE"
-	EnvPluginDroneFileBrowserSharePasswd      = "PLUGIN_DRONE_FILE_BROWSER_SHARE_PASSWD"
-	EnvPluginDroneFileBrowserShareDownloadUrl = "PLUGIN_DRONE_FILE_BROWSER_SHARE_DOWNLOAD_URL"
-	EnvPluginDroneFileBrowserShareUser        = "PLUGIN_DRONE_FILE_BROWSER_SHARE_USER"
-	EnvPluginDroneFileBrowserShareRemotePath  = "PLUGIN_DRONE_FILE_BROWSER_SHARE_REMOTE_PATH"
+	EnvPluginFileBrowserResultShareHost        = "PLUGIN_FILE_BROWSER_RESULT_SHARE_HOST"
+	EnvPluginFileBrowserResultSharePage        = "PLUGIN_FILE_BROWSER_RESULT_SHARE_PAGE"
+	EnvPluginFileBrowserResultSharePasswd      = "PLUGIN_FILE_BROWSER_RESULT_SHARE_PASSWD"
+	EnvPluginFileBrowserResultShareDownloadUrl = "PLUGIN_FILE_BROWSER_RESULT_SHARE_DOWNLOAD_URL"
+	EnvPluginFileBrowserResultShareUser        = "PLUGIN_FILE_BROWSER_RESULT_SHARE_USER"
+	EnvPluginFileBrowserResultShareRemotePath  = "PLUGIN_FILE_BROWSER_RESULT_SHARE_REMOTE_PATH"
 )
 
 var (
+	// cleanResultEnvList
+	// for clean result
+	cleanResultEnvList = []string{
+		EnvPluginFileBrowserResultShareHost,
+		EnvPluginFileBrowserResultSharePage,
+		EnvPluginFileBrowserResultSharePasswd,
+		EnvPluginFileBrowserResultShareDownloadUrl,
+		EnvPluginFileBrowserResultShareUser,
+		EnvPluginFileBrowserResultShareRemotePath,
+	}
 	// pluginWorkModeSupport
 	pluginWorkModeSupport = []string{
 		WorkModeSend,

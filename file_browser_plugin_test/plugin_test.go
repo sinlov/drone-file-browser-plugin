@@ -104,12 +104,14 @@ func TestPluginSendMode(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	assert.NotEqual(t, "", os.Getenv(file_browser_plugin.EnvPluginDroneFileBrowserShareRemotePath))
-	assert.NotEqual(t, "", os.Getenv(file_browser_plugin.EnvPluginDroneFileBrowserSharePage))
-	t.Logf("share page: %s", os.Getenv(file_browser_plugin.EnvPluginDroneFileBrowserSharePage))
-	t.Logf("share password: %s", os.Getenv(file_browser_plugin.EnvPluginDroneFileBrowserSharePasswd))
-	t.Logf("share user: %s", os.Getenv(file_browser_plugin.EnvPluginDroneFileBrowserShareUser))
-	t.Logf("share path: %s", os.Getenv(file_browser_plugin.EnvPluginDroneFileBrowserShareRemotePath))
+	assert.NotEqual(t, "", os.Getenv(file_browser_plugin.EnvPluginFileBrowserResultShareHost))
+	assert.NotEqual(t, "", os.Getenv(file_browser_plugin.EnvPluginFileBrowserResultShareRemotePath))
+	assert.NotEqual(t, "", os.Getenv(file_browser_plugin.EnvPluginFileBrowserResultSharePage))
+	t.Logf("share host: %s", os.Getenv(file_browser_plugin.EnvPluginFileBrowserResultShareHost))
+	t.Logf("share page: %s", os.Getenv(file_browser_plugin.EnvPluginFileBrowserResultSharePage))
+	t.Logf("share password: %s", os.Getenv(file_browser_plugin.EnvPluginFileBrowserResultSharePasswd))
+	t.Logf("share user: %s", os.Getenv(file_browser_plugin.EnvPluginFileBrowserResultShareUser))
+	t.Logf("share path: %s", os.Getenv(file_browser_plugin.EnvPluginFileBrowserResultShareRemotePath))
 	t.Logf("")
 
 	p.Config.FileBrowserSendModeConfig.FileBrowserDistType = file_browser_plugin.DistTypeGit
@@ -126,12 +128,14 @@ func TestPluginSendMode(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	assert.NotEqual(t, "", os.Getenv(file_browser_plugin.EnvPluginDroneFileBrowserShareRemotePath))
-	assert.NotEqual(t, "", os.Getenv(file_browser_plugin.EnvPluginDroneFileBrowserSharePage))
-	t.Logf("share page: %s", os.Getenv(file_browser_plugin.EnvPluginDroneFileBrowserSharePage))
-	t.Logf("share password: %s", os.Getenv(file_browser_plugin.EnvPluginDroneFileBrowserSharePasswd))
-	t.Logf("share user: %s", os.Getenv(file_browser_plugin.EnvPluginDroneFileBrowserShareUser))
-	t.Logf("share path: %s", os.Getenv(file_browser_plugin.EnvPluginDroneFileBrowserShareRemotePath))
+	assert.NotEqual(t, "", os.Getenv(file_browser_plugin.EnvPluginFileBrowserResultShareHost))
+	assert.NotEqual(t, "", os.Getenv(file_browser_plugin.EnvPluginFileBrowserResultShareRemotePath))
+	assert.NotEqual(t, "", os.Getenv(file_browser_plugin.EnvPluginFileBrowserResultSharePage))
+	t.Logf("share host: %s", os.Getenv(file_browser_plugin.EnvPluginFileBrowserResultShareHost))
+	t.Logf("share page: %s", os.Getenv(file_browser_plugin.EnvPluginFileBrowserResultSharePage))
+	t.Logf("share password: %s", os.Getenv(file_browser_plugin.EnvPluginFileBrowserResultSharePasswd))
+	t.Logf("share user: %s", os.Getenv(file_browser_plugin.EnvPluginFileBrowserResultShareUser))
+	t.Logf("share path: %s", os.Getenv(file_browser_plugin.EnvPluginFileBrowserResultShareRemotePath))
 	t.Logf("")
 
 	// change right file regular for more than one
@@ -147,11 +151,22 @@ func TestPluginSendMode(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	assert.NotEqual(t, "", os.Getenv(file_browser_plugin.EnvPluginDroneFileBrowserShareRemotePath))
-	assert.NotEqual(t, "", os.Getenv(file_browser_plugin.EnvPluginDroneFileBrowserSharePage))
-	t.Logf("share page: %s", os.Getenv(file_browser_plugin.EnvPluginDroneFileBrowserSharePage))
-	t.Logf("share password: %s", os.Getenv(file_browser_plugin.EnvPluginDroneFileBrowserSharePasswd))
-	t.Logf("share user: %s", os.Getenv(file_browser_plugin.EnvPluginDroneFileBrowserShareUser))
-	t.Logf("share path: %s", os.Getenv(file_browser_plugin.EnvPluginDroneFileBrowserShareRemotePath))
+	assert.NotEqual(t, "", os.Getenv(file_browser_plugin.EnvPluginFileBrowserResultShareHost))
+	assert.NotEqual(t, "", os.Getenv(file_browser_plugin.EnvPluginFileBrowserResultShareRemotePath))
+	assert.NotEqual(t, "", os.Getenv(file_browser_plugin.EnvPluginFileBrowserResultSharePage))
+	t.Logf("share host: %s", os.Getenv(file_browser_plugin.EnvPluginFileBrowserResultShareHost))
+	t.Logf("share page: %s", os.Getenv(file_browser_plugin.EnvPluginFileBrowserResultSharePage))
+	t.Logf("share password: %s", os.Getenv(file_browser_plugin.EnvPluginFileBrowserResultSharePasswd))
+	t.Logf("share user: %s", os.Getenv(file_browser_plugin.EnvPluginFileBrowserResultShareUser))
+	t.Logf("share path: %s", os.Getenv(file_browser_plugin.EnvPluginFileBrowserResultShareRemotePath))
 	t.Logf("")
+
+	// test Result
+	err = p.CleanResultEnv()
+	if err != nil {
+		t.Fatal(err)
+	}
+	assert.Equal(t, "", os.Getenv(file_browser_plugin.EnvPluginFileBrowserResultShareHost))
+	assert.Equal(t, "", os.Getenv(file_browser_plugin.EnvPluginFileBrowserResultShareRemotePath))
+	assert.Equal(t, "", os.Getenv(file_browser_plugin.EnvPluginFileBrowserResultSharePage))
 }

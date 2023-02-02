@@ -28,6 +28,16 @@ type (
 	}
 )
 
+func (p *FileBrowserPlugin) CleanResultEnv() error {
+	for _, envItem := range cleanResultEnvList {
+		err := os.Unsetenv(envItem)
+		if err != nil {
+			return fmt.Errorf("at FileBrowserPlugin.CleanResultEnv [ %s ], err: %v", envItem, err)
+		}
+	}
+	return nil
+}
+
 func (p *FileBrowserPlugin) Exec() error {
 	if p.Config.Debug {
 		for _, e := range os.Environ() {
@@ -243,11 +253,12 @@ func shareBySendConfig(p FileBrowserPlugin, remotePath string, isDir bool) error
 	}
 	log.Printf("=> share user name: %s", p.Config.FileBrowserBaseConfig.FileBrowserUsername)
 	log.Printf("=> share remote path: %s", sharePost.RemotePath)
-	setEnvFromStr(EnvPluginDroneFileBrowserSharePage, sharePost.DownloadPage)
-	setEnvFromStr(EnvPluginDroneFileBrowserSharePasswd, sharePost.DownloadPasswd)
-	//setEnvFromStr(EnvPluginDroneFileBrowserShareDownloadUrl, sharePost.DownloadUrl)
-	setEnvFromStr(EnvPluginDroneFileBrowserShareUser, p.Config.FileBrowserBaseConfig.FileBrowserUsername)
-	setEnvFromStr(EnvPluginDroneFileBrowserShareRemotePath, remotePath)
+	setEnvFromStr(EnvPluginFileBrowserResultShareHost, p.Config.FileBrowserBaseConfig.FileBrowserHost)
+	setEnvFromStr(EnvPluginFileBrowserResultSharePage, sharePost.DownloadPage)
+	setEnvFromStr(EnvPluginFileBrowserResultSharePasswd, sharePost.DownloadPasswd)
+	setEnvFromStr(EnvPluginFileBrowserResultShareDownloadUrl, sharePost.DownloadUrl)
+	setEnvFromStr(EnvPluginFileBrowserResultShareUser, p.Config.FileBrowserBaseConfig.FileBrowserUsername)
+	setEnvFromStr(EnvPluginFileBrowserResultShareRemotePath, remotePath)
 	return nil
 }
 
