@@ -1,5 +1,7 @@
 ## need `New repository secret`
 
+- file `docker-image-tag.yml`
+
 - `ACCESS_TOKEN` from [hub.docker](https://hub.docker.com/settings/security)
 - `IMAGE_BUILD_OS_NAME` like `alpine` and let `Dockerfile` under this folder
 
