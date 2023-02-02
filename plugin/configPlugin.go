@@ -38,9 +38,9 @@ type (
 	}
 
 	FileBrowserSendModeConfig struct {
+		FileBrowserRemoteRootPath     string
 		FileBrowserDistType           string
 		FileBrowserDistGraph          string
-		FileBrowserRemoteRootPath     string
 		FileBrowserTargetDistRootPath string
 		FileBrowserTargetFileRegular  string
 		FileBrowserShareLinkEnable    bool
