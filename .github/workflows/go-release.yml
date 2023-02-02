@@ -24,7 +24,7 @@ jobs:
       name: Create Release
       with:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
-        automatic_release_tag: "latest"
+#        automatic_release_tag: "latest"
         prerelease: true
         title: "prerelease Build by tag"
         # https://github.com/isaacs/node-glob
