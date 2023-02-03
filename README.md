@@ -23,9 +23,7 @@ steps:
     image: sinlov/drone-file-browser-plugin:latest
     # pull: if-not-exists
     settings:
-      debug: false # plugin debug switch
-      timeout_second: 10 # api timeout default: 10
-      file_browser_timeout_push_second: 60 # push each file timeout push second, must gather than 60.default: 60
+      # debug: false # plugin debug switch
       file_browser_host: "http://127.0.0.1:80" # must set args, file_browser host like http://127.0.0.1:80
       file_browser_username: # must set args, file_browser username
         # https://docs.drone.io/pipeline/environment/syntax/#from-secrets
@@ -33,7 +31,6 @@ steps:
       file_browser_user_password: # must set args, file_browser user password
         from_secret: file_browser_user_password
       file_browser_remote_root_path: dist/ # must set args, send to file_browser base path
-      file_browser_target_dist_root_path: dist/ # path of file_browser work on root, can set "". default: ""
       file_browser_target_file_globs: # must set args, globs list of send to file_browser under file_browser_target_dist_root_path
         - "**/*.tar.gz"
         - "**/*.sha256"
