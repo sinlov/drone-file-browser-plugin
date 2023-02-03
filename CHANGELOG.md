@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com/sinlov/drone-file-browser-plugin/compare/v1.0.0...v1.1.0) (2023-02-03)
+
+
+### Features
+
+* add file_browser_target_file_globs for support glob list to send ([031fe05](https://github.com/sinlov/drone-file-browser-plugin/commit/031fe05a09be1181f9f56f4339e29f27003c22fb))
+
 ## 1.0.0 (2023-02-02)
 
 
