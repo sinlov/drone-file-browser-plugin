@@ -7,6 +7,7 @@ import (
 	"github.com/sinlov/drone-info-tools/drone_info"
 	"github.com/sinlov/filebrowser-client/file_browser_client"
 	"github.com/sinlov/filebrowser-client/tools/folder"
+	tools2 "github.com/sinlov/filebrowser-client/tools/str_tools"
 	"github.com/sinlov/filebrowser-client/web_api"
 	"log"
 	"math/rand"
@@ -171,15 +172,36 @@ func workOnSend(p *FileBrowserPlugin) error {
 	if folder.PathIsFile(targetRootPath) {
 		fileSendPathList = append(fileSendPathList, targetRootPath)
 	} else {
-		matchPath, err := folder.WalkAllByMatchPath(targetRootPath, sendModeConfig.FileBrowserTargetFileRegular, true)
-		if err != nil {
-			return fmt.Errorf("file browser want send file local path %s be err: %v", targetRootPath, err)
+		if sendModeConfig.FileBrowserTargetFileGlob != nil && len(sendModeConfig.FileBrowserTargetFileGlob) > 0 {
+			for _, glob := range sendModeConfig.FileBrowserTargetFileGlob {
+				walkByGlob, errWalkAllByGlob := folder.WalkAllByGlob(targetRootPath, glob, true)
+				if errWalkAllByGlob != nil {
+					return fmt.Errorf("file browser want send file local path with glob %s be err: %v", targetRootPath, errWalkAllByGlob)
+				}
+				fileSendPathList = append(fileSendPathList, walkByGlob...)
+			}
 		}
-		fileSendPathList = append(fileSendPathList, matchPath...)
+		if sendModeConfig.FileBrowserTargetFileRegular != "" {
+			matchPath, err := folder.WalkAllByMatchPath(targetRootPath, sendModeConfig.FileBrowserTargetFileRegular, true)
+			if err != nil {
+				return fmt.Errorf("file browser want send file local path with file regular %s be err: %v", targetRootPath, err)
+			}
+			fileSendPathList = append(fileSendPathList, matchPath...)
+		}
 	}
 
 	if len(fileSendPathList) == 0 {
 		return fmt.Errorf("file browser want send file local path not find any file at: %s", targetRootPath)
+	}
+
+	if p.Config.Debug {
+		log.Printf("debug: now send path len %d", len(fileSendPathList))
+	}
+
+	fileSendPathList = tools2.StrArrRemoveDuplicates(fileSendPathList)
+
+	if p.Config.Debug {
+		log.Printf("debug: send path remove duplicates len %d", len(fileSendPathList))
 	}
 
 	err := p.fileBrowserClient.Login()

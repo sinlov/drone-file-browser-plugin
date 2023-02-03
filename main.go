@@ -16,7 +16,7 @@ import (
 
 const (
 	// Version of cli
-	Version = "v1.0.0"
+	Version = "v1.1.0"
 	Name    = "drone-file-browser-plugin"
 )
 
@@ -51,6 +51,7 @@ func action(c *cli.Context) error {
 			FileBrowserDistGraph:          c.String("config.file_browser_dist_graph"),
 			FileBrowserRemoteRootPath:     c.String("config.file_browser_remote_root_path"),
 			FileBrowserTargetDistRootPath: c.String("config.file_browser_target_dist_root_path"),
+			FileBrowserTargetFileGlob:     c.StringSlice("config.file_browser_target_file_globs"),
 			FileBrowserTargetFileRegular:  c.String("config.file_browser_target_file_regular"),
 
 			FileBrowserShareLinkEnable:             c.Bool("config.file_browser_share_link_enable"),
@@ -142,6 +143,11 @@ func pluginFlag() []cli.Flag {
 			Usage:   "path of file_browser local work on root, can set \"\"",
 			Value:   "",
 			EnvVars: []string{"PLUGIN_FILE_BROWSER_TARGET_DIST_ROOT_PATH"},
+		},
+		&cli.StringSliceFlag{
+			Name:    "config.file_browser_target_file_globs,file_browser_target_file_globs",
+			Usage:   "must set args, globs list of send to file_browser under file_browser_target_dist_root_path",
+			EnvVars: []string{"PLUGIN_FILE_BROWSER_TARGET_FILE_GLOBS"},
 		},
 		&cli.StringFlag{
 			Name:    "config.file_browser_target_file_regular,file_browser_target_file_regular",

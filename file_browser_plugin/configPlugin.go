@@ -53,6 +53,7 @@ type (
 		FileBrowserDistType           string
 		FileBrowserDistGraph          string
 		FileBrowserTargetDistRootPath string
+		FileBrowserTargetFileGlob     []string
 		FileBrowserTargetFileRegular  string
 		FileBrowserShareLinkEnable    bool
 		// FileBrowserShareLinkUnit

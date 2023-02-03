@@ -34,7 +34,9 @@ steps:
         from_secret: file_browser_user_password
       file_browser_remote_root_path: dist/ # must set args, send to file_browser base path
       file_browser_target_dist_root_path: dist/ # path of file_browser work on root, can set "". default: ""
-      file_browser_target_file_regular: .*.tar.gz # must set args, regular of send to file_browser under file_browser_target_dist_root_path
+      file_browser_target_file_globs: # must set args, globs list of send to file_browser under file_browser_target_dist_root_path
+        - "**/*.tar.gz"
+        - "**/*.sha256"
       file_browser_share_link_expires: 0 # if set 0, will allow share_link exist forever，default: 0
       file_browser_share_link_unit: days # take effect by open share_link, only can use as [ days hours minutes seconds ]
       file_browser_share_link_auto_password_enable: true # password of share_link auto , if open this will cover settings.file_browser_share_link_password. default: false
@@ -64,6 +66,9 @@ steps:
       file_browser_dist_type: custom # must set args, type of dist file graph only can use: git, custom
       file_browser_dist_graph: "{{ Repo.HostName }}/{{ Repo.GroupName }}/{{ Repo.ShortName }}/s/{{ Build.Number }}/{{ Stage.Name }}-{{ Build.Number }}-{{ Stage.FinishedTime }}" # type of dist custom
       file_browser_target_dist_root_path: dist/ # path of file_browser work on root, can set "". default: ""
+      file_browser_target_file_globs: # must set args, globs list of send to file_browser under file_browser_target_dist_root_path
+        - "**/*.tar.gz"
+        - "**/*.sha256"
       file_browser_target_file_regular: .*.tar.gz # must set args, regular of send to file_browser under file_browser_target_dist_root_path
       file_browser_share_link_enable: true # share dist dir as link, default: true
       file_browser_share_link_expires: 0 # if set 0, will allow share_link exist forever，default: 0
@@ -104,6 +109,9 @@ steps:
         from_secret: file_browser_user_password
       PLUGIN_FILE_BROWSER_REMOTE_ROOT_PATH: dist/ # must set args, send to file_browser base path
       PLUGIN_FILE_BROWSER_TARGET_DIST_ROOT_PATH: dist/ # path of file_browser work on root, can set "". default: ""
+      PLUGIN_FILE_BROWSER_TARGET_FILE_GLOBS: # must set args, globs list of send to file_browser under file_browser_target_dist_root_path
+        - "**/*.tar.gz"
+        - "**/*.sha256"
       PLUGIN_FILE_BROWSER_TARGET_FILE_REGULAR: .*.tar.gz # must set args, regular of send to file_browser under file_browser_target_dist_root_path
       PLUGIN_FILE_BROWSER_SHARE_LINK_EXPIRES: 0 # if set 0, will allow share_link exist forever，default: 0
       PLUGIN_FILE_BROWSER_SHARE_LINK_UNIT: days # take effect by open share_link, only can use as [ days hours minutes seconds ]
