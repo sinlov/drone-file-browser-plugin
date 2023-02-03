@@ -20,7 +20,7 @@
 ```yaml
 steps:
   - name: drone-file-browser-send
-    image: sinlov/drone-file-browser-plugin:1.2.1-alpine
+    image: sinlov/drone-file-browser-plugin:1.3.0-alpine
     # pull: if-not-exists
     settings:
       # debug: false # plugin debug switch
