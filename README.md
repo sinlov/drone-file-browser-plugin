@@ -2,7 +2,7 @@
 [![GoDoc](https://godoc.org/github.com/sinlov/drone-file-browser-plugin?status.png)](https://godoc.org/github.com/sinlov/drone-file-browser-plugin/)
 [![GoReportCard](https://goreportcard.com/badge/github.com/sinlov/drone-file-browser-plugin)](https://goreportcard.com/report/github.com/sinlov/drone-file-browser-plugin)
 [![codecov](https://codecov.io/gh/sinlov/drone-file-browser-plugin/branch/main/graph/badge.svg)](https://codecov.io/gh/sinlov/drone-file-browser-plugin)
-![docker version semver](https://img.shields.io/docker/v/sinlov/drone-file-browser-plugin?sort=semver)
+[![docker version semver](https://img.shields.io/docker/v/sinlov/drone-file-browser-plugin?sort=semver)](https://hub.docker.com/r/sinlov/drone-file-browser-plugin/tags?page=1&ordering=last_updated)
 [![docker image size](https://img.shields.io/docker/image-size/sinlov/drone-file-browser-plugin)](https://hub.docker.com/r/sinlov/drone-file-browser-plugin)
 [![docker pulls](https://img.shields.io/docker/pulls/sinlov/drone-file-browser-plugin)](https://hub.docker.com/r/sinlov/drone-file-browser-plugin/tags?page=1&ordering=last_updated)
 
@@ -165,7 +165,7 @@ ${file_browser_remote_root_path}/
 {{ Repo.HostName }}/{{ Repo.GroupName }}/{{ Repo.ShortName }}/s/{{ Build.Number }}/{{ Stage.Name }}-{{ Build.Number }}-{{ Stage.FinishedTime }}
 ```
 
-template use struct [Drone](https://github.com/sinlov/drone-info-tools/blob/main/drone_info/droneInfo.go#L335)
+template use struct [Drone](https://github.com/sinlov/drone-info-tools/blob/main/drone_info/droneInfo.go#L358)
 
 # Features
 
