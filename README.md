@@ -167,6 +167,10 @@ ${file_browser_remote_root_path}/
 
 template use struct [Drone](https://github.com/sinlov/drone-info-tools/blob/main/drone_info/droneInfo.go#L335)
 
+# Features
+
+- more see [features/README.md](features/README.md)
+
 # dev
 
 ## depends
