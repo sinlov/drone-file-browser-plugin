@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.1](https://github.com/sinlov/drone-file-browser-plugin/compare/v1.2.0...v1.2.1) (2023-02-03)
+
+
+### Bug Fixes
+
+* fix github.com/sinlov/drone-info-tools/template init error ([708ef95](https://github.com/sinlov/drone-file-browser-plugin/commit/708ef955be44d4110d467ca6dee2143ef8105df9))
+
 ## [1.2.0](https://github.com/sinlov/drone-file-browser-plugin/compare/v1.1.0...v1.2.0) (2023-02-03)
 
 ## [1.1.0](https://github.com/sinlov/drone-file-browser-plugin/compare/v1.0.0...v1.1.0) (2023-02-03)
