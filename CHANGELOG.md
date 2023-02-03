@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.4.0](https://github.com/sinlov/drone-file-browser-plugin/compare/v1.3.0...v1.4.0) (2023-02-03)
+
+
+### Features
+
+* embed package.json to config this cli ([0164279](https://github.com/sinlov/drone-file-browser-plugin/commit/016427917a3ba15c68cc995627e83fb9cdecd74a))
+
 ## [1.3.0](https://github.com/sinlov/drone-file-browser-plugin/compare/v1.2.1...v1.3.0) (2023-02-03)
 
 
