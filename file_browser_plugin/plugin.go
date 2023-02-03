@@ -2,12 +2,11 @@ package file_browser_plugin
 
 import (
 	"fmt"
-	"github.com/sinlov/drone-file-browser-plugin/template"
-	"github.com/sinlov/drone-file-browser-plugin/tools"
 	"github.com/sinlov/drone-info-tools/drone_info"
+	"github.com/sinlov/drone-info-tools/template"
+	tools "github.com/sinlov/drone-info-tools/tools/str_tools"
 	"github.com/sinlov/filebrowser-client/file_browser_client"
 	"github.com/sinlov/filebrowser-client/tools/folder"
-	tools2 "github.com/sinlov/filebrowser-client/tools/str_tools"
 	"github.com/sinlov/filebrowser-client/web_api"
 	"log"
 	"math/rand"
@@ -198,7 +197,7 @@ func workOnSend(p *FileBrowserPlugin) error {
 		log.Printf("debug: now send path len %d", len(fileSendPathList))
 	}
 
-	fileSendPathList = tools2.StrArrRemoveDuplicates(fileSendPathList)
+	fileSendPathList = tools.StrArrRemoveDuplicates(fileSendPathList)
 
 	if p.Config.Debug {
 		log.Printf("debug: send path remove duplicates len %d", len(fileSendPathList))
