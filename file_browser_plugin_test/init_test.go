@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/sinlov/drone-info-tools/template"
 	"io/fs"
 	"math/rand"
 	"os"
@@ -53,6 +54,7 @@ func envCheck(t *testing.T) bool {
 }
 
 func init() {
+	template.RegisterSettings(template.DefaultFunctions)
 	envDebug = os.Getenv("ENV_DEBUG") == "true"
 
 	envFileBrowserHost = os.Getenv("PLUGIN_FILE_BROWSER_HOST")

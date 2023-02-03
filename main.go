@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/sinlov/drone-file-browser-plugin/file_browser_plugin"
+	"github.com/sinlov/drone-info-tools/template"
 	"github.com/sinlov/filebrowser-client/web_api"
 	"log"
 	"os"
@@ -16,7 +17,7 @@ import (
 
 const (
 	// Version of cli
-	Version = "v1.2.0"
+	Version = "v1.2.1"
 	Name    = "drone-file-browser-plugin"
 )
 
@@ -468,6 +469,7 @@ func droneInfoFlag() []cli.Flag {
 }
 
 func main() {
+	template.RegisterSettings(template.DefaultFunctions)
 	app := cli.NewApp()
 	app.Version = Version
 	app.Name = "Drone FileBrowserPlugin"
