@@ -1,8 +1,10 @@
 package main
 
 import (
+	_ "embed"
 	"fmt"
 	"github.com/sinlov/drone-file-browser-plugin/file_browser_plugin"
+	"github.com/sinlov/drone-info-tools/pkgJson"
 	"github.com/sinlov/drone-info-tools/template"
 	"github.com/sinlov/filebrowser-client/web_api"
 	"log"
@@ -16,10 +18,11 @@ import (
 )
 
 const (
-	// Version of cli
-	Version = "v1.3.0"
-	Name    = "drone-file-browser-plugin"
+	Name = "drone-file-browser-plugin"
 )
+
+//go:embed package.json
+var packageJson string
 
 func action(c *cli.Context) error {
 
@@ -27,8 +30,9 @@ func action(c *cli.Context) error {
 
 	drone := drone_urfave_cli_v2.UrfaveCliBindDroneInfo(c)
 
+	cliVersion := pkgJson.GetPackageJsonVersionGoStyle()
 	if isDebug {
-		log.Printf("debug: cli version is %s", Version)
+		log.Printf("debug: cli version is %s", cliVersion)
 		log.Printf("debug: load droneInfo finish at link: %v\n", drone.Build.Link)
 	}
 
@@ -71,7 +75,7 @@ func action(c *cli.Context) error {
 
 	p := file_browser_plugin.FileBrowserPlugin{
 		Name:    Name,
-		Version: Version,
+		Version: cliVersion,
 		Drone:   drone,
 		Config:  config,
 	}
@@ -469,9 +473,10 @@ func droneInfoFlag() []cli.Flag {
 }
 
 func main() {
+	pkgJson.InitPkgJsonContent(packageJson)
 	template.RegisterSettings(template.DefaultFunctions)
 	app := cli.NewApp()
-	app.Version = Version
+	app.Version = pkgJson.GetPackageJsonVersionGoStyle()
 	app.Name = "Drone FileBrowserPlugin"
 	app.Usage = ""
 	year := time.Now().Year()
