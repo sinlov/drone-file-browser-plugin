@@ -88,11 +88,11 @@ steps:
 
 - download by [https://github.com/sinlov/drone-file-browser-plugin/releases](https://github.com/sinlov/drone-file-browser-plugin/releases) to get platform binary, then has local path
 - binary path like `C:\Drone\drone-runner-exec\plugins\drone-file-browser-plugin.exe` can be drone run env like `EXEC_DRONE_FILE_BROWSER_PLUGIN_FULL_PATH`
-- env:EXEC_DRONE_FILE_BROWSER_PLUGIN_FULL_PATH can set at file which define as [DRONE_RUNNER_ENVFILE](https://docs.drone.io/runner/exec/configuration/reference/drone-runner-envfile/) to support each platform
+- env:EXEC_DRONE_FILE_BROWSER_FULL_PATH can set at file which define as [DRONE_RUNNER_ENVFILE](https://docs.drone.io/runner/exec/configuration/reference/drone-runner-envfile/) to support each platform
 
 ```yaml
 steps:
-  - name: drone-file-browser-send-exec # must has env EXEC_DRONE_FILE_BROWSER_PLUGIN_FULL_PATH and exec tools
+  - name: drone-file-browser-send-exec # must has env EXEC_DRONE_FILE_BROWSER_FULL_PATH and exec tools
     environment:
       PLUGIN_DEBUG: false
       # PLUGIN_NTP_TARGET: "pool.ntp.org" # if not set will not sync
@@ -116,7 +116,7 @@ steps:
       PLUGIN_FILE_BROWSER_SHARE_LINK_UNIT: days # take effect by open share_link, only can use as [ days hours minutes seconds ]
       PLUGIN_FILE_BROWSER_SHARE_LINK_AUTO_PASSWORD_ENABLE: true # password of share_link auto , if open this will cover settings.file_browser_share_link_password. default: false
     commands:
-      - ${EXEC_DRONE_FILE_BROWSER_PLUGIN_FULL_PATH} `
+      - ${EXEC_DRONE_FILE_BROWSER_FULL_PATH} `
         ""
     when:
       event: # https://docs.drone.io/pipeline/exec/syntax/conditions/#by-event

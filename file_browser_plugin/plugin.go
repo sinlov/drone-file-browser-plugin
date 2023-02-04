@@ -285,8 +285,8 @@ func shareBySendConfig(p FileBrowserPlugin, remotePath string, isDir bool) error
 
 func fetchRemotePathByLocalRoot(localAbsPath, localRootPath, remoteRootPath string) string {
 	remotePath := strings.Replace(localAbsPath, localRootPath, "", -1)
-	remotePath = strings.TrimPrefix(remotePath, "/")
-	return filepath.Join(remoteRootPath, remotePath)
+	remotePath = folder.Path2WebPath(remotePath)
+	return fmt.Sprintf("%s/%s", remoteRootPath, remotePath)
 }
 
 func genPwd(cnt uint) string {
