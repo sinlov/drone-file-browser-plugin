@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.6.0](https://github.com/sinlov/drone-file-browser-plugin/compare/v1.5.0...v1.6.0) (2023-02-04)
+
+
+### Features
+
+* let file upload must pass sha256 check ([9477286](https://github.com/sinlov/drone-file-browser-plugin/commit/947728649d1d8627b21ebb7b24aee75a4b6b5c07))
+
 ## [1.5.0](https://github.com/sinlov/drone-file-browser-plugin/compare/v1.4.0...v1.5.0) (2023-02-04)
 
 
