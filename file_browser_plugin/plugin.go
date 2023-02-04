@@ -11,7 +11,6 @@ import (
 	"log"
 	"math/rand"
 	"os"
-	"path"
 	"path/filepath"
 	"strconv"
 	"strings"
@@ -287,7 +286,7 @@ func shareBySendConfig(p FileBrowserPlugin, remotePath string, isDir bool) error
 func fetchRemotePathByLocalRoot(localAbsPath, localRootPath, remoteRootPath string) string {
 	remotePath := strings.Replace(localAbsPath, localRootPath, "", -1)
 	remotePath = strings.TrimPrefix(remotePath, "/")
-	return path.Join(remoteRootPath, remotePath)
+	return filepath.Join(remoteRootPath, remotePath)
 }
 
 func genPwd(cnt uint) string {
