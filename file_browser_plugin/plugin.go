@@ -159,7 +159,8 @@ func workOnSend(p *FileBrowserPlugin) error {
 		log.Printf("debug: workOnSend targetRootPath: %s", targetRootPath)
 		log.Printf("debug: workOnSend fileBrowserWorkSpace: %s", p.Config.FileBrowserBaseConfig.FileBrowserWorkSpace)
 		log.Printf("debug: workOnSend targetDistRootPath: %s", sendModeConfig.FileBrowserTargetDistRootPath)
-		log.Printf("debug: workOnSend targetFileRegular: %s", sendModeConfig.FileBrowserTargetFileRegular)
+		log.Printf("debug: workOnSend target File Regular: %v", sendModeConfig.FileBrowserTargetFileRegular)
+		log.Printf("debug: workOnSend target File Glob: %v", sendModeConfig.FileBrowserTargetFileGlob)
 	}
 
 	if !(folder.PathExistsFast(targetRootPath)) {
@@ -168,21 +169,36 @@ func workOnSend(p *FileBrowserPlugin) error {
 
 	var fileSendPathList []string
 	if folder.PathIsFile(targetRootPath) {
+		if p.Config.Debug {
+			log.Printf("debug: target path is file just send one local file: %s", targetRootPath)
+		}
 		fileSendPathList = append(fileSendPathList, targetRootPath)
 	} else {
 		if sendModeConfig.FileBrowserTargetFileGlob != nil && len(sendModeConfig.FileBrowserTargetFileGlob) > 0 {
+			if p.Config.Debug {
+				log.Printf("debug: target file want find by File Glob: %v", sendModeConfig.FileBrowserTargetFileGlob)
+			}
 			for _, glob := range sendModeConfig.FileBrowserTargetFileGlob {
 				walkByGlob, errWalkAllByGlob := folder.WalkAllByGlob(targetRootPath, glob, true)
 				if errWalkAllByGlob != nil {
 					return fmt.Errorf("file browser want send file local path with glob %s be err: %v", targetRootPath, errWalkAllByGlob)
 				}
+				if p.Config.Debug {
+					log.Printf("debug: target path find by File Glob files: %v", walkByGlob)
+				}
 				fileSendPathList = append(fileSendPathList, walkByGlob...)
 			}
 		}
 		if sendModeConfig.FileBrowserTargetFileRegular != "" {
+			if p.Config.Debug {
+				log.Printf("debug: target file want find by File Regular: %v", sendModeConfig.FileBrowserTargetFileRegular)
+			}
 			matchPath, err := folder.WalkAllByMatchPath(targetRootPath, sendModeConfig.FileBrowserTargetFileRegular, true)
 			if err != nil {
 				return fmt.Errorf("file browser want send file local path with file regular %s be err: %v", targetRootPath, err)
+			}
+			if p.Config.Debug {
+				log.Printf("debug: target path find by File Regular files: %v", matchPath)
 			}
 			fileSendPathList = append(fileSendPathList, matchPath...)
 		}
