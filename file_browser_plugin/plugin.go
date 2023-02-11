@@ -184,7 +184,7 @@ func workOnSend(p *FileBrowserPlugin) error {
 					return fmt.Errorf("file browser want send file local path with glob %s be err: %v", targetRootPath, errWalkAllByGlob)
 				}
 				if p.Config.Debug {
-					log.Printf("debug: target path find by File Glob files: %v", walkByGlob)
+					log.Printf("debug: target path find by File Glob [ %s ] files: %v", glob, walkByGlob)
 				}
 				fileSendPathList = append(fileSendPathList, walkByGlob...)
 			}
@@ -198,7 +198,7 @@ func workOnSend(p *FileBrowserPlugin) error {
 				return fmt.Errorf("file browser want send file local path with file regular %s be err: %v", targetRootPath, err)
 			}
 			if p.Config.Debug {
-				log.Printf("debug: target path find by File Regular files: %v", matchPath)
+				log.Printf("debug: target path find by File Regular [ %s ] files: %v", sendModeConfig.FileBrowserTargetFileRegular, matchPath)
 			}
 			fileSendPathList = append(fileSendPathList, matchPath...)
 		}
