@@ -5,6 +5,7 @@
 [![docker version semver](https://img.shields.io/docker/v/sinlov/drone-file-browser-plugin?sort=semver)](https://hub.docker.com/r/sinlov/drone-file-browser-plugin/tags?page=1&ordering=last_updated)
 [![docker image size](https://img.shields.io/docker/image-size/sinlov/drone-file-browser-plugin)](https://hub.docker.com/r/sinlov/drone-file-browser-plugin)
 [![docker pulls](https://img.shields.io/docker/pulls/sinlov/drone-file-browser-plugin)](https://hub.docker.com/r/sinlov/drone-file-browser-plugin/tags?page=1&ordering=last_updated)
+[![github release](https://img.shields.io/github/v/release/sinlov/drone-file-browser-plugin?style=social)](https://github.com/sinlov/drone-file-browser-plugin/releases)
 
 ## for what
 
