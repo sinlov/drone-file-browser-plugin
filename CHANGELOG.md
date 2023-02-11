@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.8.0](https://github.com/sinlov/drone-file-browser-plugin/compare/v1.7.0...v1.8.0) (2023-02-11)
+
+
+### Features
+
+* add file send before debug infos ([355c14f](https://github.com/sinlov/drone-file-browser-plugin/commit/355c14f3b6af96b677b1f0d0b6a3bb10b8421bc4))
+* update github.com/sinlov/drone-info-tools v1.8.0 ([84ea5e2](https://github.com/sinlov/drone-file-browser-plugin/commit/84ea5e23149b4b673ec591cf735cd01cba964c0f))
+
 ## [1.7.0](https://github.com/sinlov/drone-file-browser-plugin/compare/v1.6.0...v1.7.0) (2023-02-04)
 
 
