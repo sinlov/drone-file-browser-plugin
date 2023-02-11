@@ -171,3 +171,92 @@ func TestPluginSendMode(t *testing.T) {
 	assert.Equal(t, "", os.Getenv(file_browser_plugin.EnvPluginFileBrowserResultShareRemotePath))
 	assert.Equal(t, "", os.Getenv(file_browser_plugin.EnvPluginFileBrowserResultSharePage))
 }
+
+func TestSendByFileGlobs(t *testing.T) {
+	// mock SendByFileGlobs
+
+	t.Logf("~> mock SendByFileGlobs")
+	if envCheck(t) {
+		return
+	}
+
+	p := file_browser_plugin.FileBrowserPlugin{
+		Name:    mockName,
+		Version: mockVersion,
+	}
+	// use env:ENV_DEBUG
+	p.Config.Debug = envDebug
+	testDataFolderAbsPath, err := getOrCreateTestDataFolderFullPath()
+	testDataDistFolderPath, err := initTestDataPostFileDir()
+	if err != nil {
+		t.Error(err)
+	}
+
+	t.Logf("testDataFolderAbsPath %s", testDataFolderAbsPath)
+
+	assert.NotEqual(t, "", testDataDistFolderPath)
+	p.Config.FileBrowserBaseConfig.FileBrowserHost = envFileBrowserHost
+	p.Config.FileBrowserBaseConfig.FileBrowserUsername = envUserName
+	p.Config.FileBrowserBaseConfig.FileBrowserUserPassword = envPassword
+	p.Config.FileBrowserBaseConfig.FileBrowserWorkSpace = testDataFolderAbsPath
+	err = p.Exec()
+	if nil == err {
+		t.Error("args FileBrowserWorkMode error should be catch!")
+	}
+
+	t.Logf("-> now start test FileBrowserWorkMode %s", file_browser_plugin.WorkModeSend)
+	p.Config.FileBrowserWorkMode = file_browser_plugin.WorkModeSend
+
+	p.Config.FileBrowserSendModeConfig.FileBrowserDistType = file_browser_plugin.DistTypeGit
+
+	err = p.Exec()
+	if nil == err {
+		t.Error("args file_browser_remote_root_path should be catch!")
+	}
+
+	p.Config.TimeoutSecond = defTimeoutSecond
+	p.Config.FileBrowserBaseConfig.FileBrowserTimeoutPushSecond = defTimeoutFileSecond
+	p.Config.FileBrowserSendModeConfig.FileBrowserRemoteRootPath = mockFileBrowserRemoteRootPath
+	p.Config.FileBrowserSendModeConfig.FileBrowserShareLinkEnable = true
+	p.Config.FileBrowserSendModeConfig.FileBrowserShareLinkAutoPasswordEnable = true
+	p.Config.FileBrowserSendModeConfig.FileBrowserShareLinkUnit = web_api.ShareUnitHours
+	p.Config.FileBrowserSendModeConfig.FileBrowserShareLinkExpires = 4
+
+	p.Drone = *drone_info.MockDroneInfo("success")
+	// verify FileBrowserPlugin
+	assert.Equal(t, "sinlov", p.Drone.Repo.OwnerName)
+
+	// do SendByFileGlobs
+	t.Logf("~> do SendByFileGlobs")
+
+	p.Config.FileBrowserSendModeConfig.FileBrowserTargetFileGlob = []string{}
+
+	err = p.Exec()
+	if err == nil {
+		t.Fatal("args file browser want send FileBrowserTargetFileGlob not empty should be catch!")
+	}
+
+	p.Config.FileBrowserSendModeConfig.FileBrowserTargetFileGlob = []string{
+		"**/*.json",
+	}
+
+	// change FileBrowserTargetFileGlob
+	t.Logf("-> share by FileBrowserTargetFileGlob: %v", p.Config.FileBrowserSendModeConfig.FileBrowserTargetFileGlob)
+	t.Logf("-> share by file browser work space: %s", p.Config.FileBrowserBaseConfig.FileBrowserWorkSpace)
+	t.Logf("-> share by dist type: %s", p.Config.FileBrowserSendModeConfig.FileBrowserDistType)
+	t.Logf("-> share by dist remote path: %s", p.Config.FileBrowserSendModeConfig.FileBrowserRemoteRootPath)
+	t.Logf("-> share by file target path: %s", p.Config.FileBrowserSendModeConfig.FileBrowserTargetDistRootPath)
+
+	err = p.Exec()
+	if err != nil {
+		t.Fatal(err)
+	}
+	assert.NotEqual(t, "", os.Getenv(file_browser_plugin.EnvPluginFileBrowserResultShareHost))
+	assert.NotEqual(t, "", os.Getenv(file_browser_plugin.EnvPluginFileBrowserResultShareRemotePath))
+	assert.NotEqual(t, "", os.Getenv(file_browser_plugin.EnvPluginFileBrowserResultSharePage))
+	t.Logf("share host: %s", os.Getenv(file_browser_plugin.EnvPluginFileBrowserResultShareHost))
+	t.Logf("share page: %s", os.Getenv(file_browser_plugin.EnvPluginFileBrowserResultSharePage))
+	t.Logf("share password: %s", os.Getenv(file_browser_plugin.EnvPluginFileBrowserResultSharePasswd))
+	t.Logf("share user: %s", os.Getenv(file_browser_plugin.EnvPluginFileBrowserResultShareUser))
+	t.Logf("share path: %s", os.Getenv(file_browser_plugin.EnvPluginFileBrowserResultShareRemotePath))
+}
