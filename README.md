@@ -107,11 +107,11 @@ steps:
       # must set args, send to file_browser base path
       PLUGIN_FILE_BROWSER_REMOTE_ROOT_PATH: dist/
       # path of file_browser work on root, can set "". default: ""
-      PLUGIN_FILE_BROWSER_TARGET_DIST_ROOT_PATH: dist/
+      PLUGIN_FILE_BROWSER_TARGET_DIST_ROOT_PATH: ""
       # must set args, globs list of send to file_browser under file_browser_target_dist_root_path
       PLUGIN_FILE_BROWSER_TARGET_FILE_GLOBS: "**/*.tar.gz,**/*.sha256"
       # must set args, regular of send to file_browser under file_browser_target_dist_root_path
-      PLUGIN_FILE_BROWSER_TARGET_FILE_REGULAR: .*.tar.gz
+#      PLUGIN_FILE_BROWSER_TARGET_FILE_REGULAR: .*.tar.gz
       PLUGIN_FILE_BROWSER_SHARE_LINK_EXPIRES: 0 # if set 0, will allow share_link exist forever，default: 0
       PLUGIN_FILE_BROWSER_SHARE_LINK_UNIT: days # take effect by open share_link, only can use as [ days hours minutes seconds ]
       PLUGIN_FILE_BROWSER_SHARE_LINK_AUTO_PASSWORD_ENABLE: true # password of share_link auto , if open this will cover settings.file_browser_share_link_password. default: false
