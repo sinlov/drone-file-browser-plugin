@@ -1,6 +1,6 @@
 {
   "name": "drone-file-browser-plugin",
-  "version": "1.8.0",
+  "version": "1.9.0",
   "description": "drone post file to https://github.com/filebrowser/filebrowser",
   "directories": {
     "doc": "doc"
