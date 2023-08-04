@@ -7,6 +7,12 @@ import (
 	"github.com/urfave/cli/v2"
 )
 
+// IsBuildDebugOpen
+// when config or drone build open debug will open debug
+func IsBuildDebugOpen(c *cli.Context) bool {
+	return c.Bool(NamePluginDebug) || c.Bool(drone_info.NameCliStepsDebug)
+}
+
 func BindFlag(c *cli.Context, cliVersion, cliName string, drone drone_info.Drone) FileBrowserPlugin {
 	config := Config{
 

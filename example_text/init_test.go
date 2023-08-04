@@ -1,13 +1,10 @@
-package plugin_test
+package example_text
 
 import (
 	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/sinlov/drone-info-tools/drone_info"
-	"github.com/sinlov/drone-info-tools/drone_log"
-	"github.com/sinlov/drone-info-tools/template"
 	"io/fs"
 	"math/rand"
 	"os"
@@ -20,69 +17,17 @@ import (
 )
 
 const (
-	defTimeoutSecond     = 10
-	defTimeoutFileSecond = 30
-	mockVersion          = "v0.0.0"
-	mockName             = "drone-file-browser-plugin"
-	keyEnvCiKeys         = "CI_KEYS"
-
-	mockFileBrowserRemoteRootPath        = "dist/"
-	mockFileBrowserTargetDistRootPath    = ""
-	mockFileBrowserTargetFileRegularFail = "*.json"
-	mockFileBrowserTargetFileRegular     = ".*.json"
-	mockFileBrowserTargetFileRegularOne  = ".*.apk"
-	mockFileBrowserDistGraph             = "{{ Repo.HostName }}/{{ Repo.GroupName }}/{{ Repo.ShortName }}/s/{{ Build.Number }}/{{ Stage.Name }}-{{ Build.Number }}-{{ Stage.FinishedTime }}"
+	keyEnvCiKeys = "CI_KEYS"
 )
 
 var (
 	envDebug   = false
 	envEnvKeys []string
-	strData    []string
-
-	envFileBrowserHost = ""
-	envUserName        = ""
-	envPassword        = ""
 )
 
-func envCheck(t *testing.T) bool {
-	if envDebug {
-		drone_log.ShowLogLineNo(true)
-		drone_log.OpenDebug()
-	}
-	// most CI system will set env CI to true
-	envCI := fetchOsEnvBool("CI", false)
-	if !envCI {
-		t.Logf("not in CI system, skip envCheck")
-		return false
-	}
-	t.Logf("check env for CI system")
-
-	mustSetEnvList := []string{
-		"PLUGIN_FILE_BROWSER_HOST",
-		"PLUGIN_FILE_BROWSER_USERNAME",
-		"PLUGIN_FILE_BROWSER_USER_PASSWORD",
-	}
-	for _, item := range mustSetEnvList {
-		if os.Getenv(item) == "" {
-			t.Logf("plasee set env: %s, than run test\nfull need set env %v", item, mustSetEnvList)
-			return true
-		}
-	}
-
-	return false
-}
-
 func init() {
-	template.RegisterSettings(template.DefaultFunctions)
-	envDebug = fetchOsEnvBool(drone_info.EnvKeyPluginDebug, false) || fetchOsEnvBool(drone_info.EnvDroneBuildDebug, false)
+	envDebug = fetchOsEnvBool("PLUGIN_DEBUG", false)
 	envEnvKeys = fetchOsEnvArray(keyEnvCiKeys)
-	for i := 0; i < 200; i++ {
-		strData = append(strData, randomStr(300))
-	}
-
-	envFileBrowserHost = os.Getenv("PLUGIN_FILE_BROWSER_HOST")
-	envUserName = os.Getenv("PLUGIN_FILE_BROWSER_USERNAME")
-	envPassword = os.Getenv("PLUGIN_FILE_BROWSER_USER_PASSWORD")
 }
 
 // test case file tools start

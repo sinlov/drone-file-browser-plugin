@@ -1,11 +1,16 @@
-[![go-ubuntu](https://github.com/sinlov/drone-file-browser-plugin/workflows/go-ubuntu/badge.svg?branch=main)](https://github.com/sinlov/drone-file-browser-plugin/actions)
-[![GoDoc](https://godoc.org/github.com/sinlov/drone-file-browser-plugin?status.png)](https://godoc.org/github.com/sinlov/drone-file-browser-plugin/)
-[![GoReportCard](https://goreportcard.com/badge/github.com/sinlov/drone-file-browser-plugin)](https://goreportcard.com/report/github.com/sinlov/drone-file-browser-plugin)
-[![codecov](https://codecov.io/gh/sinlov/drone-file-browser-plugin/branch/main/graph/badge.svg)](https://codecov.io/gh/sinlov/drone-file-browser-plugin)
-[![docker version semver](https://img.shields.io/docker/v/sinlov/drone-file-browser-plugin?sort=semver)](https://hub.docker.com/r/sinlov/drone-file-browser-plugin/tags?page=1&ordering=last_updated)
-[![docker image size](https://img.shields.io/docker/image-size/sinlov/drone-file-browser-plugin)](https://hub.docker.com/r/sinlov/drone-file-browser-plugin)
-[![docker pulls](https://img.shields.io/docker/pulls/sinlov/drone-file-browser-plugin)](https://hub.docker.com/r/sinlov/drone-file-browser-plugin/tags?page=1&ordering=last_updated)
-[![github release](https://img.shields.io/github/v/release/sinlov/drone-file-browser-plugin?style=social)](https://github.com/sinlov/drone-file-browser-plugin/releases)
+[![ci](https://github.com/sinlov/drone-file-browser-plugin/workflows/ci/badge.svg?branch=main)](https://github.com/sinlov/drone-file-browser-plugin/actions/workflows/ci.yml)
+
+[![go mod version](https://img.shields.io/github/go-mod/go-version/sinlov/drone-file-browser-plugin?label=go.mod)](https://github.com/sinlov/drone-file-browser-plugin)
+[![GoDoc](https://godoc.org/github.com/sinlov/drone-file-browser-plugin?status.png)](https://godoc.org/github.com/sinlov/drone-file-browser-plugin)
+[![goreportcard](https://goreportcard.com/badge/github.com/sinlov/drone-file-browser-plugin)](https://goreportcard.com/report/github.com/sinlov/drone-file-browser-plugin)
+
+[![docker hub version semver](https://img.shields.io/docker/v/sinlov/drone-file-browser-plugin?sort=semver)](https://hub.docker.com/r/sinlov/drone-file-browser-plugin/tags?page=1&ordering=last_updated)
+[![docker hub image size](https://img.shields.io/docker/image-size/sinlov/drone-file-browser-plugin)](https://hub.docker.com/r/sinlov/drone-file-browser-plugin)
+[![docker hub image pulls](https://img.shields.io/docker/pulls/sinlov/drone-file-browser-plugin)](https://hub.docker.com/r/sinlov/drone-file-browser-plugin/tags?page=1&ordering=last_updated)
+
+[![GitHub license](https://img.shields.io/github/license/sinlov/drone-file-browser-plugin)](https://github.com/sinlov/drone-file-browser-plugin)
+[![GitHub latest SemVer tag)](https://img.shields.io/github/v/tag/sinlov/drone-file-browser-plugin)](https://github.com/sinlov/drone-file-browser-plugin/tags)
+[![GitHub release)](https://img.shields.io/github/v/release/sinlov/drone-file-browser-plugin)](https://github.com/sinlov/drone-file-browser-plugin/releases)
 
 ## for what
 
@@ -176,12 +181,22 @@ template use struct [Drone](https://github.com/sinlov/drone-info-tools/blob/main
 
 # dev
 
-## depends
+## env
 
-in go mod project
+- minimum go version: go 1.18
+- change `go 1.18`, `^1.18`, `1.18.10` to new go version
+
+### libs
+
+| lib                                        | version |
+|:-------------------------------------------|:--------|
+| https://github.com/stretchr/testify        | v1.8.4  |
+| https://github.com/sebdah/goldie           | v2.5.3  |
+
+- more see [go.mod](go.mod)
 
 ```bash
-# warning use privte git host must set
+# warning use private git host must set
 # global set for once
 # add private git host like github.com to evn GOPRIVATE
 $ go env -w GOPRIVATE='github.com'
