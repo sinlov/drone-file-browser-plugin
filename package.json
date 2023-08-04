@@ -1,5 +1,28 @@
 {
   "name": "drone-file-browser-plugin",
   "version": "1.8.0",
-  "dependencies": {}
+  "description": "drone post file to https://github.com/filebrowser/filebrowser",
+  "directories": {
+    "doc": "doc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sinlov/drone-file-browser-plugin.git"
+  },
+  "keywords": [
+    "go",
+    "drone",
+    "docker",
+    "devops"
+  ],
+  "author": {
+    "name": "sinlov",
+    "email": "sinlovgmppt@gmail.com",
+    "url": "https://github.com/sinlov/drone-file-browser-plugin"
+  },
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/sinlov/drone-file-browser-plugin/issues"
+  },
+  "homepage": "https://github.com/sinlov/drone-file-browser-plugin#readme"
 }
