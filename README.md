@@ -19,7 +19,20 @@
 - this plugin need file browser `username`
 - and need file browser user need `password`
 
-## Pipeline Settings (.drone.yml)
+## Contributing
+
+[![Contributor Covenant](https://img.shields.io/badge/contributor%20covenant-v1.4-ff69b4.svg)](.github/CONTRIBUTING_DOC/CODE_OF_CONDUCT.md)
+[![GitHub contributors](https://img.shields.io/github/contributors/sinlov/drone-file-browser-plugin)](https://github.com/sinlov/drone-file-browser-plugin/graphs/contributors)
+
+We welcome community contributions to this project.
+
+Please read [Contributor Guide](.github/CONTRIBUTING_DOC/CONTRIBUTING.md) for more information on how to get started.
+
+请阅读有关 [贡献者指南](.github/CONTRIBUTING_DOC/zh-CN/CONTRIBUTING.md) 以获取更多如何入门的信息
+
+## usage
+
+### Pipeline Settings (.drone.yml)
 
 - sample
 
