@@ -1,4 +1,4 @@
-package example_text
+package example_test
 
 import (
 	"errors"
