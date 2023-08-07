@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [convention-change-log](https://github.com/convention-change/convention-change-log) for commit guidelines.
 
+## [1.9.1](https://github.com/sinlov/drone-file-browser-plugin/compare/1.9.0...v1.9.1) (2023-08-07)
+
+### ♻ Refactor
+
+* rename test case ([b5e4b8a3](https://github.com/sinlov/drone-file-browser-plugin/commit/b5e4b8a3c77ff1fe79d6531db5df3c80e752e6b9))
+
+### 👷‍ Build System
+
+* github.com/sinlov/drone-info-tools v1.31.0 ([dced0778](https://github.com/sinlov/drone-file-browser-plugin/commit/dced07782ae1b7d48ac74f3c01ae4888e52bfb20))
+
 ## [1.9.0](https://github.com/sinlov/drone-file-browser-plugin/compare/1.8.0...v1.9.0) (2023-08-05)
 
 ### ✨ Features
