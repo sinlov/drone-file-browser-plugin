@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [convention-change-log](https://github.com/convention-change/convention-change-log) for commit guidelines.
 
+## [1.9.2](https://github.com/sinlov/drone-file-browser-plugin/compare/1.9.1...v1.9.2) (2023-10-20)
+
+### 👷‍ Build System
+
+* update version github.com/sinlov/drone-info-tools v1.32.0 ([493dc12a](https://github.com/sinlov/drone-file-browser-plugin/commit/493dc12a977daffbd56916b59fbfa12cb0ee6484))
+
+* change go make kiit ([b8c01a1d](https://github.com/sinlov/drone-file-browser-plugin/commit/b8c01a1d38297323ba9a726efae1e233e584bf04))
+
+* bump docker/setup-qemu-action from 2 to 3 ([40113539](https://github.com/sinlov/drone-file-browser-plugin/commit/40113539ff1ebe1ebabc82bd788beaba79fac71d))
+
+* bump docker/setup-buildx-action from 2 to 3 ([a5d48e19](https://github.com/sinlov/drone-file-browser-plugin/commit/a5d48e191da9c5341928a6837263da101767276a))
+
+* bump docker/metadata-action from 4 to 5 ([364972ff](https://github.com/sinlov/drone-file-browser-plugin/commit/364972ff0a188258125854377fa56f89c0ce288a))
+
+* bump docker/login-action from 2 to 3 ([fc590c71](https://github.com/sinlov/drone-file-browser-plugin/commit/fc590c7166a961562e92faca8c7f87d4501eae44))
+
+* bump docker/build-push-action from 4 to 5 ([afc3c799](https://github.com/sinlov/drone-file-browser-plugin/commit/afc3c799782a08d915d350dd73c2b1b17e78cdb2))
+
+* bump actions/checkout from 3 to 4 ([bb1a5ee8](https://github.com/sinlov/drone-file-browser-plugin/commit/bb1a5ee856dc6f5514e51ba9ae0a472863b91a4b))
+
 ## [1.9.1](https://github.com/sinlov/drone-file-browser-plugin/compare/1.9.0...v1.9.1) (2023-08-07)
 
 ### ♻ Refactor
